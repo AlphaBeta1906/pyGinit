@@ -13,6 +13,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        pyGinit=main:pyGinit
+        pyGinit= pyGinit.main:pyGinit
     ''',
 )

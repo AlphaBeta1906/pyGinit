@@ -1,4 +1,5 @@
 None
+..gitignore
 Actionscript.gitignore
 Ada.gitignore
 Agda.gitignore
