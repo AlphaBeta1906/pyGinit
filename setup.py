@@ -8,6 +8,8 @@ setup(
     py_modules=['main'],
     install_requires=[
         'Click',
+        'PyInquirer',
+        'pyGithub'
     ],
     entry_points='''
         [console_scripts]
