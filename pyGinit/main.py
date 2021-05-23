@@ -30,25 +30,21 @@ def add_readme(add_readme, description=""):
 
 def add_gitignore(gitginore_template):
     """need fix """
-    gitginore_template = gitginore_template.rstrip("\n") # remove trailing newline
+    gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
 
     if not gitginore_template == "None":
         url = (
             "https://raw.githubusercontent.com/github/gitignore/master/"
-            + gitginore_template.strip(" ") + ".gitignore"
+            + gitginore_template.strip(" ")
+            + ".gitignore"
         )
-        arr = [gitginore_template]
-        print(arr)
-        print(url)
         """ download gitignore template from github repository """
-       	dowonload = requests.get(url)
-       	print(dowonload.url)
-       	open(".gitignore", "wb").write(dowonload.content)
+        dowonload = requests.get(url)
+        open(".gitignore", "wb").write(dowonload.content)
     elif gitginore_template == ".gitignore":
-    	open(".gitignore").close()
+        open(".gitignore").close()
     else:
-    	pass
-
+        pass
 
 
 @pyGinit.command()
@@ -62,7 +58,7 @@ def init():
     try:
         gh = Github(config_obj["token"]["token"])
 
-        add_readme(answers.get("readme_confirm"),answers.get("description"))
+        add_readme(answers.get("readme_confirm"), answers.get("description"))
         add_gitignore(answers.get("gitginore_template"))
 
         # user = gh.get_user()
@@ -80,7 +76,7 @@ def init():
     except AssertionError:
         pass
     except TypeError:
-    	pass
+        pass
     except GithubException:
         click.echo(Fore.RED + Style.BRIGHT + "Error : repo name too short")
     except requests.exceptions.ConnectionError:
