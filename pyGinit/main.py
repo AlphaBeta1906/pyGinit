@@ -89,6 +89,7 @@ def init():
 @click.argument("token")
 def set_token(token):
     """ set your github token """
+    
     gh = Github(token)
     user = gh.get_user()
     try:
