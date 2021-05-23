@@ -13,7 +13,6 @@ pluggy==0.13.1
 prompt-toolkit==1.0.14
 py==1.10.0
 pycparser==2.20
--e git+git@github.com:AlphaBeta1906/pyGinit.git@8c8774a9754d2cd58fec39a8bfb3dd0e86e147aa#egg=pyGinit
 PyGithub==1.55
 Pygments==2.9.0
 PyInquirer==1.0.3
