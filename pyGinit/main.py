@@ -34,7 +34,6 @@ def add_readme(add_readme, description=""):
 
 
 def add_gitignore(gitginore_template):
-    """need fix """
     gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
 
     if not gitginore_template == "None":
@@ -97,7 +96,7 @@ def init():
         pass
     except TypeError:
         pass
-    """"""
+
 
     except BadCredentialsException:
         click.echo(
