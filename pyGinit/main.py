@@ -16,8 +16,9 @@ config_obj = ConfigParser()
 
 
 @click.group()
-@click.version_option("v0.1")
+@click.version_option("v0.1",help="Show version")
 def pyGinit():
+    """title"""
     pass
 
 
