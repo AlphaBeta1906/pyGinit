@@ -14,12 +14,12 @@ questions = [
     {
         "type": "input",
         "name": "repo_name",
-        "message": "Enter the name for your repo : ",
+        "message": "Enter the name of your repo : ",
     },
     {
         "type": "input",
         "name": "description",
-        "message": "Enter description of your repo (leave blank if you dont have one) : ",
+        "message": "Enter description of your repo (optional) : ",
     },
     {
         "type": "list",
