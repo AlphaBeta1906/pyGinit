@@ -1,15 +1,17 @@
 import click
 from PyInquirer import prompt
 from examples import custom_style_2
-from .inquirer import questions
 from github import Github
 from github.GithubException import GithubException, BadCredentialsException
 from colorama import init, Fore, Style
 from configparser import ConfigParser
 from pathlib import Path
-from os import path
+from os import path,system,devnull
+from subprocess import Popen,call,STDOUT,PIPE
 import requests.exceptions
 
+from .git import execute_git
+from .inquirer import questions
 
 init()
 config_obj = ConfigParser()
@@ -62,12 +64,20 @@ def init():
     try:
         gh = Github(config_obj["auth"]["token"])
 
+        # check if current dir is git repo or not if, if not program will  continue executing
+        if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, 'w')) != 0:
+            pass
+        else:
+            print("git already initialize")
+            exit() 
+
         add_readme(answers.get("readme_confirm"), answers.get("description"))
         add_gitignore(answers.get("gitginore_template"))
 
         # user = gh.get_user()
         # repo = user.create_repo(answers.get("repo_name"), description = answers.get("description"),private = private)
 
+        execute_git()
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
     except BadCredentialsException:
         click.echo(Fore.RED + Style.BRIGHT + "Error : authrization error")
@@ -88,6 +98,10 @@ def init():
     except requests.exceptions.ConnectTimeout:
         click.echo(Fore.RED + Style.BRIGHT + "Error : connection timeout")
 
+@pyGinit.command()
+def init_remote():
+    """ initialize remote repo only """
+    click.echo("initialize remote repo only")
 
 @pyGinit.command()
 @click.argument("token")
