@@ -8,9 +8,10 @@ from configparser import ConfigParser
 from pathlib import Path
 from os import path, system, devnull
 from subprocess import Popen, call, STDOUT, PIPE
-import requests.exceptions
+import requests
+import time
 
-from .git import execute_git
+from .git import execute_git,remote_git
 from .inquirer import questions
 
 init()
@@ -18,7 +19,7 @@ config_obj = ConfigParser()
 
 
 @click.group()
-@click.version_option("v0.3", help="Show version")
+@click.version_option("0.1.3", help="Show version")
 def pyGinit():
     """title"""
     pass
@@ -53,7 +54,7 @@ def add_gitignore(gitginore_template):
 
 @pyGinit.command()
 def init():
-    """initialize local git repo and create remote github repository """
+    """ initialize local git repository and create remote github repository """
     answers = prompt(questions, style=custom_style_2)
     private = True if answers.get("repo_type") == "private" else False
     # print(answers.get("description"))
@@ -62,33 +63,45 @@ def init():
     try:
         # check both remote and local repository are exist
         # if not program will continue
+
+        """
+        if statment must tell if one or both local and remote already exist
+        example : if local =yes & remote no => create remote only
+                  if local  no  & remote yes => create local only
+                  if both yes => program will stop...
+        ...maybe in future
+        for now let's just use this code below
+        """ 
         url_check = "https://github.com/{username}/{repo_name}".format(
             username=config_obj["auth"]["username"], repo_name=answers.get("repo_name")
         )
-
-        if (
-            call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0
-            and requests.get(url_check,timeout = 15).status_code == 404
-        ):
+        if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
             pass
         else:
-            print("both local and remote repository already created")
-            exit()
-        gh = Github(config_obj["auth"]["token"])
+            click.echo("Local repository already exists, you can use pyGinit remote to create remote only")
+            click.echo("program stopped")
 
+            exit()
+        
+
+        gh = Github(config_obj["auth"]["token"])
+        print(config_obj["auth"]["token"])
+        #uncomment only when testing
         user = gh.get_user()
+
         repo = user.create_repo(
             answers.get("repo_name"),
             description=answers.get("description"),
             private=private,
         )
 
+        
 
     except KeyError:
         click.echo(
             Fore.RED
             + Style.BRIGHT
-            + "Error : github token not found use set-token command to set your token"
+            + "Error : github token not found,use set-auth command to set your token and username"
         )
 
     #  two exception below are throw when some prompt are not filled or user abort the command
@@ -122,6 +135,7 @@ def init():
         add_readme(answers.get("readme_confirm"), answers.get("description"))
         add_gitignore(answers.get("gitginore_template"))
         execute_git()
+        #remote_git(config_obj["auth"]["username"], config_obj["auth"]["token"], answers.get("repo_name"))
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
 
 # should i create this ?
