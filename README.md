@@ -28,7 +28,7 @@ use the same command to change your token and username
 
 ### repository initalization : 
 
-go to your porject directory where you want to create local and repository for it. and type :
+go to your porject directory where you want to create local and remote repository for it. and then type :
 ```
 pyGinit init
 ```
