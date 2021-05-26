@@ -1,3 +1,4 @@
+[![Python package](https://github.com/AlphaBeta1906/pyGinit/actions/workflows/python-package.yml/badge.svg)](https://github.com/AlphaBeta1906/pyGinit/actions/workflows/python-package.yml)
 # pyGinit
 
 pyGinit is a command line tools that help you to initialize your current project a local git repo and remote repo
