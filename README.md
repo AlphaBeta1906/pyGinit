@@ -3,6 +3,12 @@
 
 pyGinit is a command line tools that help you to initialize your current project a local git repo and remote repo
 
+## Requirements
+Requirements before install pyGinit:
+1. a github account and it's personal acces token
+2. git 1.70 or newer
+3. python >= 3.7
+
 ## Installation
 
 <!--- Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
@@ -23,7 +29,7 @@ pip install --editable .
 You need to add token and username of your github account using :
 
 ```
-pyGinit set-auth YOUR_GITHUB_TOKEN YOUR_GITHUB_USERNAME
+pyGinit set-auth <YOUR_GITHUB_TOKEN> <YOUR_GITHUB_USERNAME> <YOUR_GITHUB_PASSWORD>
 ```
 use the same command to change your token and username
 

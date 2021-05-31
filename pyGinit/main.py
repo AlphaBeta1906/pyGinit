@@ -140,13 +140,12 @@ def init_remote():
     click.echo("initialize remote repo only")
 
 
-@pyGinit.command()
-@click.argument("token")
-@click.argument("username")
-@click.argument("password")
+@pyGinit.command(options_metavar='<options>')
+@click.argument("token",metavar='<github_token>')
+@click.argument("username",metavar='<github_username>')
+@click.argument("password",metavar='<github_password>')
 def set_auth(token, username,password):
     """ set your github token and username """
-    # https://scuzzlebuzzle:<MYTOKEN>@github.com/scuzzlebuzzle/ol3-1.git
     try:
         config_obj["auth"] = {"token": token, "username": username,"password ": password}
         with open(path.join(Path.home(), ".pyGinitconfig.ini"), "w") as conf:
