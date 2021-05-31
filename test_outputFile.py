@@ -1,6 +1,6 @@
 from pyGinit import main
 import os
-
+import git
 
 def test_add_readme():
     main.add_readme(True, "Test")

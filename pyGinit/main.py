@@ -11,7 +11,7 @@ from subprocess import Popen, call, STDOUT, PIPE
 import requests
 import time
 
-from .git import execute_git,remote_git
+from .gitCommand import  execute_git
 from .inquirer import questions
 
 init()
@@ -66,8 +66,8 @@ def init():
 
         """
         if statment must tell if one or both local and remote already exist
-        example : if local =yes & remote no => create remote only
-                  if local  no  & remote yes => create local only
+        example : if local yes & remote no => create remote only
+                  if local no  & remote yes => create local only
                   if both yes => program will stop...
         ...maybe in future
         for now let's just use this code below
@@ -82,20 +82,14 @@ def init():
             click.echo("program stopped")
 
             exit()
-        
-
         gh = Github(config_obj["auth"]["token"])
-        print(config_obj["auth"]["token"])
         #uncomment only when testing
         user = gh.get_user()
-
         repo = user.create_repo(
             answers.get("repo_name"),
             description=answers.get("description"),
             private=private,
         )
-
-        
 
     except KeyError:
         click.echo(
@@ -106,9 +100,9 @@ def init():
 
     #  two exception below are throw when some prompt are not filled or user abort the command
     except AssertionError:
-        pass
+        exit()
     except TypeError:
-        pass
+        exit()
 
 
     except BadCredentialsException:
@@ -129,13 +123,14 @@ def init():
         click.echo(Fore.RED + Style.BRIGHT + "Error : connection error")
     except requests.exceptions.ConnectTimeout:
         click.echo(Fore.RED + Style.BRIGHT + "Error : connection timeout")
+    except requests.exceptions.ReadTimeout:
+        click.echo(Fore.RED + Style.BRIGHT + "Error : connection timeout")
     except AttributeError:
         pass
     else:
         add_readme(answers.get("readme_confirm"), answers.get("description"))
         add_gitignore(answers.get("gitginore_template"))
-        execute_git()
-        #remote_git(config_obj["auth"]["username"], config_obj["auth"]["token"], answers.get("repo_name"))
+        execute_git(config_obj["auth"]["username"], config_obj["auth"]["password"], answers.get("repo_name"))
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
 
 # should i create this ?
@@ -148,11 +143,12 @@ def init_remote():
 @pyGinit.command()
 @click.argument("token")
 @click.argument("username")
-def set_auth(token, username):
+@click.argument("password")
+def set_auth(token, username,password):
     """ set your github token and username """
     # https://scuzzlebuzzle:<MYTOKEN>@github.com/scuzzlebuzzle/ol3-1.git
     try:
-        config_obj["auth"] = {"token": token, "username": username}
+        config_obj["auth"] = {"token": token, "username": username,"password ": password}
         with open(path.join(Path.home(), ".pyGinitconfig.ini"), "w") as conf:
             config_obj.write(conf)
     except Exception as e:
