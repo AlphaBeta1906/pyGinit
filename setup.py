@@ -6,7 +6,7 @@ setup(
     author="fariz",
     license="MIT",
     py_modules=["main"],
-    install_requires=["Click", "PyInquirer", "pyGithub","Colorama"],
+    install_requires=["Click", "PyInquirer", "pyGithub","Colorama","GitPython"],
     entry_points="""
         [console_scripts]
         pyGinit= pyGinit.main:pyGinit
