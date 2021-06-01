@@ -11,7 +11,7 @@ from subprocess import Popen, call, STDOUT, PIPE
 import requests
 import time
 
-from .gitCommand import  execute_git
+from .gitCommand import execute_git
 from .inquirer import questions
 
 init()
@@ -43,7 +43,7 @@ def add_gitignore(gitginore_template):
             + gitginore_template.strip(" ")
             + ".gitignore"
         )
-        """ download gitignore template from github repository """
+        """ download gitignore template from github repository(yeah...repository github account itself) """
         dowonload = requests.get(url)
         open(".gitignore", "wb").write(dowonload.content)
     elif gitginore_template == ".gitignore":
@@ -70,20 +70,32 @@ def init():
                   if local no  & remote yes => create local only
                   if both yes => program will stop...
         ...maybe in future
+
         for now let's just use this code below
-        """ 
+        """
         url_check = "https://github.com/{username}/{repo_name}".format(
             username=config_obj["auth"]["username"], repo_name=answers.get("repo_name")
         )
-        if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
+        if (
+            call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0
+            or not requests.get(url_check).status_code
+        ):
             pass
         else:
-            click.echo("Local repository already exists, you can use pyGinit remote to create remote only")
+            click.echo(
+                "Local repository already exists, you can use pyGinit remote to create remote only"
+            )
             click.echo("program stopped")
 
             exit()
+
+        """  
+        main parts where remote repositorty are created 
+        if exception happen(connection error,wrong inpu etc) repository(local and remote)
+        is not created
+        """
         gh = Github(config_obj["auth"]["token"])
-        #uncomment only when testing
+        # uncomment only when testing
         user = gh.get_user()
         repo = user.create_repo(
             answers.get("repo_name"),
@@ -98,12 +110,14 @@ def init():
             + "Error : github token not found,use set-auth command to set your token and username"
         )
 
+    """
+    exception  handling
+    """
     #  two exception below are throw when some prompt are not filled or user abort the command
     except AssertionError:
         exit()
     except TypeError:
         exit()
-
 
     except BadCredentialsException:
         click.echo(
@@ -120,34 +134,55 @@ def init():
         )
 
     except requests.exceptions.ConnectionError:
-        click.echo(Fore.RED + Style.BRIGHT + "Error : connection error")
+        click.echo(
+            Fore.RED
+            + Style.BRIGHT
+            + "Error : Connection error.Are you connnect to internet?"
+        )
     except requests.exceptions.ConnectTimeout:
-        click.echo(Fore.RED + Style.BRIGHT + "Error : connection timeout")
+        click.echo(
+            Fore.RED
+            + Style.BRIGHT
+            + "Error : Connection timeout.Please check your internet connetion"
+        )
     except requests.exceptions.ReadTimeout:
-        click.echo(Fore.RED + Style.BRIGHT + "Error : connection timeout")
+        click.echo(
+            Fore.RED
+            + Style.BRIGHT
+            + "Error : Connection timeout.Please check your internet connetion"
+        )
     except AttributeError:
         pass
     else:
         add_readme(answers.get("readme_confirm"), answers.get("description"))
         add_gitignore(answers.get("gitginore_template"))
-        execute_git(config_obj["auth"]["username"], config_obj["auth"]["password"], answers.get("repo_name"))
+        execute_git(
+            config_obj["auth"]["username"],
+            config_obj["auth"]["password"],
+            answers.get("repo_name"),
+        )
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
+
 
 # should i create this ?
 @pyGinit.command()
 def init_remote():
-    """ initialize remote repo only """
+    """ only create empty github repository """
     click.echo("initialize remote repo only")
 
 
-@pyGinit.command(options_metavar='<options>')
-@click.argument("token",metavar='<github_token>')
-@click.argument("username",metavar='<github_username>')
-@click.argument("password",metavar='<github_password>')
-def set_auth(token, username,password):
+@pyGinit.command(options_metavar="<options>")
+@click.argument("token", metavar="<github_token>")
+@click.argument("username", metavar="<github_username>")
+@click.argument("password", metavar="<github_password>")
+def set_auth(token, username, password):
     """ set your github token and username """
     try:
-        config_obj["auth"] = {"token": token, "username": username,"password ": password}
+        config_obj["auth"] = {
+            "token": token,
+            "username": username,
+            "password ": password,
+        }
         with open(path.join(Path.home(), ".pyGinitconfig.ini"), "w") as conf:
             config_obj.write(conf)
     except Exception as e:

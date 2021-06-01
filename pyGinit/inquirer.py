@@ -2,6 +2,7 @@ from prompt_toolkit.validation import Validator, ValidationError
 import os
 import sys
 
+
 file = open(
     os.path.join(os.path.dirname(os.path.realpath(__file__)), "gitignore-list.txt"), "r"
 )
