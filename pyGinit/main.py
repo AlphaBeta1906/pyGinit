@@ -110,9 +110,7 @@ def init():
             + "Error : github token not found,use set-auth command to set your token and username"
         )
 
-    """
-    exception  handling
-    """
+
     #  two exception below are throw when some prompt are not filled or user abort the command
     except AssertionError:
         exit()
