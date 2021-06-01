@@ -51,4 +51,5 @@ Please make sure to update tests as appropriate.
 ## License
 [MIT](https://github.com/AlphaBeta1906/pyGinit/blob/master/LICENSE)
 
-Still under development
+## Development status :
+[v0.1.3-alpha](https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.1.3-alpha)
