@@ -10,14 +10,6 @@ Requirements before install pyGinit:
 3. python >= 3.7
 
 ## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pyGinit.
-
-```bash
-pip install pyGinit
-```
-or install from source : 
-
 ```bash
 git clone  https://github.com/AlphaBeta1906/pyGinit.git
 cd path/to/pyGinit
