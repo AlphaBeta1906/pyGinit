@@ -1,4 +1,4 @@
-from pyGinit import main
+from src import main
 from click.testing import CliRunner
 from configparser import ConfigParser
 from pathlib import Path
@@ -9,9 +9,6 @@ config_obj = ConfigParser()
 runner = CliRunner()
 
 def test_set_token_command():
-	"""
-	becarefull when run the test because it will overide your auth data
-	"""
     result = runner.invoke(main.set_auth, ["test_token", "test_username","test_password"])
     parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 

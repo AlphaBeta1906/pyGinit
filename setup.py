@@ -5,7 +5,7 @@ setup(
     version="0.1.6",
     description = "a simple cli tools for automation git repository creation",
     long_description = long_description,
-    long_description_content_type='text/markdown',
+    #long_description_content_type='text/markdown',
     url='https://github.com/AlphaBeta1906/pyGinit',
     download_url = 'https://github.com/AlphaBeta1906/pyGinit/archive/refs/tags/v0.1.5-beta.tar.gz',
     author="fariz",
