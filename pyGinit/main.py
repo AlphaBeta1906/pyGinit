@@ -19,16 +19,19 @@ config_obj = ConfigParser()
 
 
 @click.group()
-@click.version_option("0.1.3", help="Show version")
+@click.version_option("0.1.5", help="Show version")
 def pyGinit():
-    """title"""
+    """pyGinit a simple cli automation tools
+       to initalize bot local and remote repository
+
+       version : 0.1.5-beta """
     pass
 
 
-def add_readme(add_readme, description=""):
+def add_readme(add_readme, title, description=""):
     if add_readme:
         file = open("README.md", "w")
-        file.write(description)
+        file.writelines(["# " + title + "\n", "\n" + description])
         file.close()
     else:
         pass
@@ -36,20 +39,27 @@ def add_readme(add_readme, description=""):
 
 def add_gitignore(gitginore_template):
     gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
-
-    if not gitginore_template == "None":
-        url = (
-            "https://raw.githubusercontent.com/github/gitignore/master/"
-            + gitginore_template.strip(" ")
-            + ".gitignore"
+    try:
+        if not gitginore_template == "None":
+            url = (
+                "https://raw.githubusercontent.com/github/gitignore/master/"
+                + gitginore_template.strip(" ")
+                + ".gitignore"
+            )
+            """ download gitignore template from github repository(yeah...repository github account itself) """
+            dowonload = requests.get(url)
+            open(".gitignore", "wb").write(dowonload.content)
+        elif gitginore_template == ".gitignore":
+            open(".gitignore").close()
+        else:
+            pass
+    except requests.exceptions.ConnectionError:
+        click.echo(
+            Fore.RED
+            + Style.BRIGHT
+            + "Error:Connection error when downloading .gitginore template"
         )
-        """ download gitignore template from github repository(yeah...repository github account itself) """
-        dowonload = requests.get(url)
-        open(".gitignore", "wb").write(dowonload.content)
-    elif gitginore_template == ".gitignore":
-        open(".gitignore").close()
-    else:
-        pass
+        exit()
 
 
 @pyGinit.command()
@@ -66,11 +76,11 @@ def init():
 
         """
         if statment must tell if one or both local and remote already exist
-        example : if local yes & remote no => create remote only
-                  if local no  & remote yes => create local only
-                  if both yes => program will stop...
+        example :
+                if local yes & remote no => create remote only
+                if local no  & remote yes => create local only
+                        if both yes => program will stop...
         ...maybe in future
-
         for now let's just use this code below
         """
         url_check = "https://github.com/{username}/{repo_name}".format(
@@ -78,15 +88,14 @@ def init():
         )
         if (
             call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0
-            or not requests.get(url_check).status_code
         ):
             pass
         else:
-            click.echo(
-                "Local repository already exists, you can use pyGinit remote to create remote only"
-            )
+            if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
+                click.echo(
+                    "Local repository already exists, you can use pyGinit remote to create remote only"
+                )
             click.echo("program stopped")
-
             exit()
 
         """  
@@ -94,6 +103,7 @@ def init():
         if exception happen(connection error,wrong inpu etc) repository(local and remote)
         is not created
         """
+
         gh = Github(config_obj["auth"]["token"])
         # uncomment only when testing
         user = gh.get_user()
@@ -110,7 +120,6 @@ def init():
             + "Error : github token not found,use set-auth command to set your token and username"
         )
 
-
     #  two exception below are throw when some prompt are not filled or user abort the command
     except AssertionError:
         exit()
@@ -124,12 +133,8 @@ def init():
             + "Error : authrization error. have you entered the correct token and username?"
         )
 
-    except GithubException:
-        click.echo(
-            Fore.RED
-            + Style.BRIGHT
-            + "Error : repository name too short, minimum name length is 1 character"
-        )
+    except GithubException as e:
+        click.echo(e)
 
     except requests.exceptions.ConnectionError:
         click.echo(
@@ -152,7 +157,11 @@ def init():
     except AttributeError:
         pass
     else:
-        add_readme(answers.get("readme_confirm"), answers.get("description"))
+        add_readme(
+            answers.get("readme_confirm"),
+            answers.get("repo_name"),
+            answers.get("description"),
+        )
         add_gitignore(answers.get("gitginore_template"))
         execute_git(
             config_obj["auth"]["username"],
