@@ -2,20 +2,21 @@ from setuptools import setup
 long_description =open('README.md').read()
 setup(
     name="pyGinit",
-    version="0.1.5",
+    version="0.1.6",
     description = "a simple cli tools for automation git repository creation",
     long_description = long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/AlphaBeta1906/pyGinit',
-    download_url = 'https://github.com/AlphaBeta1906/pyGinit/archive/refs/tags/v0.1.3-alpha.tar.gz',
+    download_url = 'https://github.com/AlphaBeta1906/pyGinit/archive/refs/tags/v0.1.5-beta.tar.gz',
     author="fariz",
     author_email = "farizi1906@gmail.com",
     license="MIT",
     py_modules=["main"],
     classifiers=[ 
-        'Development Status :: 4 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
+        'Environment :: Console',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
@@ -25,7 +26,7 @@ setup(
     install_requires=["Click", "PyInquirer", "pyGithub","Colorama"],
     entry_points="""
         [console_scripts]
-        pyGinit= pyGinit.main:pyGinit
+        pyGinit= src.main:pyGinit
     """,
     python_requires='>=3.7'
 )

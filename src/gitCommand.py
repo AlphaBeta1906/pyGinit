@@ -17,7 +17,6 @@ def execute_git(username, password, repo_name):
     )
     repo = git.Repo.init()
     repo.git.add("--all")
-    print(url)
     repo.index.commit("initial commit")
     repo.git.push(url, "HEAD:master")
     repo.create_remote('origin', url)

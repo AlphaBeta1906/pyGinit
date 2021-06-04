@@ -9,6 +9,9 @@ config_obj = ConfigParser()
 runner = CliRunner()
 
 def test_set_token_command():
+	"""
+	becarefull when run the test because it will overide your auth data
+	"""
     result = runner.invoke(main.set_auth, ["test_token", "test_username","test_password"])
     parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
@@ -20,7 +23,7 @@ def test_set_token_command():
 def test_version_output():
 	result =  runner.invoke(main.pyGinit,["--version"] )
 	assert result.exit_code == 0
-	assert '0.1.5' in result.output
+	assert '0.1.6' in result.output
 
 
 

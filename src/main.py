@@ -19,12 +19,12 @@ config_obj = ConfigParser()
 
 
 @click.group()
-@click.version_option("0.1.5", help="Show version")
+@click.version_option("0.1.6", help="Show version")
 def pyGinit():
     """pyGinit a simple cli automation tools
        to initalize bot local and remote repository
 
-       version : 0.1.5-beta 
+       version : 0.1.6 
     """
     pass
 
@@ -68,7 +68,6 @@ def init():
     """ initialize local git repository and create remote github repository """
     answers = prompt(questions, style=custom_style_2)
     private = True if answers.get("repo_type") == "private" else False
-    # print(answers.get("description"))
     parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
     try:

@@ -11,13 +11,13 @@ Requirements before install pyGinit:
 
 ## Installation
 
-<!--- Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pyGinit.
 
 ```bash
-pip install foobar
+pip install pyGinit
 ```
---->
-For now the only way to install it is clone from this repository
+or install from source : 
+
 ```bash
 git clone  https://github.com/AlphaBeta1906/pyGinit.git
 cd path/to/pyGinit
@@ -52,4 +52,7 @@ Please make sure to update tests as appropriate.
 [MIT](https://github.com/AlphaBeta1906/pyGinit/blob/master/LICENSE)
 
 ## Development status :
+[v0.1.5-beta](https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.1.5-beta)
+v0.1.4-beta (i forget the link :v)
 [v0.1.3-alpha](https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.1.3-alpha)
+
