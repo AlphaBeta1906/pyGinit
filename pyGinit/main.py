@@ -24,7 +24,8 @@ def pyGinit():
     """pyGinit a simple cli automation tools
        to initalize bot local and remote repository
 
-       version : 0.1.5-beta """
+       version : 0.1.5-beta 
+    """
     pass
 
 
@@ -175,7 +176,7 @@ def init():
 @pyGinit.command()
 def init_remote():
     """ only create empty github repository """
-    click.echo("initialize remote repo only")
+    click.echo("will added soon....")
 
 
 @pyGinit.command(options_metavar="<options>")
