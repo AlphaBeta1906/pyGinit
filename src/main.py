@@ -19,7 +19,7 @@ config_obj = ConfigParser()
 
 
 @click.group()
-@click.version_option("0.1.6", help="Show version")
+@click.version_option("0.1.7", help="Show version")
 def pyGinit():
     """pyGinit a simple cli automation tools
        to initalize bot local and remote repository
@@ -62,14 +62,24 @@ def add_gitignore(gitginore_template):
         )
         exit()
 
-
 @pyGinit.command()
 def init():
     """ initialize local git repository and create remote github repository """
     answers = prompt(questions, style=custom_style_2)
     private = True if answers.get("repo_type") == "private" else False
     parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
-
+    url_check = "https://github.com/{username}/{repo_name}".format(
+        username=config_obj["auth"]["username"], repo_name=answers.get("repo_name")
+    )
+    if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
+        pass
+    else:
+        if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
+            click.echo(
+                "Local repository already exists, you can use pyGinit remote to create remote only"
+            )
+        click.echo("program stopped")
+        exit()
     try:
         # check both remote and local repository are exist
         # if not program will continue
@@ -81,29 +91,14 @@ def init():
                 if local no  & remote yes => create local only
                         if both yes => program will stop...
         ...maybe in future
-        for now let's just use this code below
+        for now let's just use these code below
         """
-        url_check = "https://github.com/{username}/{repo_name}".format(
-            username=config_obj["auth"]["username"], repo_name=answers.get("repo_name")
-        )
-        if (
-            call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0
-        ):
-            pass
-        else:
-            if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
-                click.echo(
-                    "Local repository already exists, you can use pyGinit remote to create remote only"
-                )
-            click.echo("program stopped")
-            exit()
 
         """  
         main parts where remote repositorty are created 
         if exception happen(connection error,wrong inpu etc) repository(local and remote)
         is not created
         """
-
         gh = Github(config_obj["auth"]["token"])
         # uncomment only when testing
         user = gh.get_user()
@@ -134,7 +129,8 @@ def init():
         )
 
     except GithubException as e:
-        click.echo(e)
+        click.echo(Fore.RED + Style.BRIGHT + "Error when creating remote repository")
+        raise e
 
     except requests.exceptions.ConnectionError:
         click.echo(
@@ -169,14 +165,6 @@ def init():
             answers.get("repo_name"),
         )
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
-
-
-# should i create this ?
-@pyGinit.command()
-def init_remote():
-    """ only create empty github repository """
-    click.echo("will added soon....")
-
 
 @pyGinit.command(options_metavar="<options>")
 @click.argument("token", metavar="<github_token>")
