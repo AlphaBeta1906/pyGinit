@@ -20,7 +20,7 @@ def test_set_token_command():
 def test_version_output():
 	result =  runner.invoke(main.pyGinit,["--version"] )
 	assert result.exit_code == 0
-	assert '0.1.6' in result.output
+	assert '0.1.7' in result.output
 
 
 
