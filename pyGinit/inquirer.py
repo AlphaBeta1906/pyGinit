@@ -1,15 +1,7 @@
 from prompt_toolkit.validation import Validator, ValidationError
+from .gitignoreList import gitignore
 import os
 import sys
-
-
-file = open(
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), "gitignore-list.txt"), "r"
-)
-arr = []
-for text in file:
-    arr.append(text.replace(".gitignore", " "))
-
 
 questions = [
     {
@@ -32,7 +24,7 @@ questions = [
         "type": "list",
         "name": "gitginore_template",
         "message": "Select gitginore template for your repo",
-        "choices": arr,
+        "choices": gitignore,
     },
     {
         "type": "confirm",

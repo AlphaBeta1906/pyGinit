@@ -19,12 +19,12 @@ config_obj = ConfigParser()
 
 
 @click.group()
-@click.version_option("0.1.7", help="Show version")
+@click.version_option("0.1.9", help="Show version")
 def pyGinit():
     """pyGinit a simple cli automation tools
-       to initalize bot local and remote repository
+    to initalize both local and remote repository
 
-       version : 0.1.6 
+    version : 0.1.9
     """
     pass
 
@@ -62,6 +62,7 @@ def add_gitignore(gitginore_template):
         )
         exit()
 
+
 @pyGinit.command()
 def init():
     """ initialize local git repository and create remote github repository """
@@ -76,7 +77,7 @@ def init():
     else:
         if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
             click.echo(
-                "Local repository already exists, you can use pyGinit remote to create remote only"
+                "Local repository already exists"
             )
         click.echo("program stopped")
         exit()
@@ -127,7 +128,7 @@ def init():
             + Style.BRIGHT
             + "Error : authrization error. have you entered the correct token and username?"
         )
-
+    #? How to get github error message?
     except GithubException as e:
         click.echo(Fore.RED + Style.BRIGHT + "Error when creating remote repository")
         raise e
@@ -165,6 +166,7 @@ def init():
             answers.get("repo_name"),
         )
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
+
 
 @pyGinit.command(options_metavar="<options>")
 @click.argument("token", metavar="<github_token>")

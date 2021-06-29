@@ -17,10 +17,6 @@ def test_set_token_command():
     assert config_obj["auth"]["username"] == "test_username"
     assert config_obj["auth"]["password"] == "test_password"
 
-def test_version_output():
-	result =  runner.invoke(main.pyGinit,["--version"] )
-	assert result.exit_code == 0
-	assert '0.1.7' in result.output
 
 
 
