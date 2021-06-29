@@ -1,4 +1,4 @@
-from src import main
+from pyGinit import main
 from click.testing import CliRunner
 from configparser import ConfigParser
 from pathlib import Path
