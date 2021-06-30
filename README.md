@@ -14,7 +14,7 @@ using pip :
 ```bash
 pip install pyGinit
 ```
-from this repository :
+from this repository(maybe not stable) :
 ```bash
 git clone  https://github.com/AlphaBeta1906/pyGinit.git
 cd path/to/pyGinit
@@ -37,6 +37,7 @@ go to your porject directory where you want to create local and remote repositor
 ```
 pyGinit init
 ```
+all you need is to fill out inquirer by `pyInquirer` and let `pyGinit` do the rest, from creating local repository,remote github repository, and push your directory to github 
 _Note: make sure the directory is not a local git repository_
 
 
