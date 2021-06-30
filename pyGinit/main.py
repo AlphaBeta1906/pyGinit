@@ -122,6 +122,7 @@ def init():
     except TypeError:
         exit()
 
+
     except BadCredentialsException:
         click.echo(
             Fore.RED
@@ -154,15 +155,17 @@ def init():
     except AttributeError:
         pass
     else:
+        click.echo("creating repository...Please wait")
         add_readme(
             answers.get("readme_confirm"),
             answers.get("repo_name"),
             answers.get("description"),
         )
         add_gitignore(answers.get("gitginore_template"))
+        click.echo("pushing file to remote")
         execute_git(
             config_obj["auth"]["username"],
-            config_obj["auth"]["password"],
+            config_obj["auth"]["token"],
             answers.get("repo_name"),
         )
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
@@ -171,14 +174,12 @@ def init():
 @pyGinit.command(options_metavar="<options>")
 @click.argument("token", metavar="<github_token>")
 @click.argument("username", metavar="<github_username>")
-@click.argument("password", metavar="<github_password>")
 def set_auth(token, username, password):
     """ set your github token and username """
     try:
         config_obj["auth"] = {
             "token": token,
             "username": username,
-            "password ": password,
         }
         with open(path.join(Path.home(), ".pyGinitconfig.ini"), "w") as conf:
             config_obj.write(conf)
