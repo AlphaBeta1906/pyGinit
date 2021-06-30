@@ -174,7 +174,7 @@ def init():
 @pyGinit.command(options_metavar="<options>")
 @click.argument("token", metavar="<github_token>")
 @click.argument("username", metavar="<github_username>")
-def set_auth(token, username, password):
+def set_auth(token, username):
     """ set your github token and username """
     try:
         config_obj["auth"] = {
