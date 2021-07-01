@@ -17,19 +17,24 @@ from .inquirer import questions
 init()
 config_obj = ConfigParser()
 
+# TODO : add ssh
+# TODO : user can custom remote name
 
 @click.group()
-@click.version_option("0.1.9", help="Show version")
+@click.version_option("0.2.0", help="Show version")
 def pyGinit():
     """pyGinit a simple cli automation tools
     to initalize both local and remote repository
 
-    version : 0.1.9
+    version : 0.2.0
     """
     pass
 
 
 def add_readme(add_readme, title, description=""):
+    """
+    add  readme if description parameter is not null
+    """
     if add_readme:
         file = open("README.md", "w")
         file.writelines(["# " + title + "\n", "\n" + description])
@@ -39,6 +44,12 @@ def add_readme(add_readme, title, description=""):
 
 
 def add_gitignore(gitginore_template):
+    """
+    add gitignore template if the parameter is not equal None
+
+            parameters :
+                gitginore_template(str) : gitignore template name e.g python,javascript etc         
+    """
     gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
     try:
         if not gitginore_template == "None":
@@ -100,9 +111,20 @@ def init():
         if exception happen(connection error,wrong inpu etc) repository(local and remote)
         is not created
         """
+
+        # add readme
+        add_readme(
+            answers.get("readme_confirm"),
+            answers.get("repo_name"),
+            answers.get("description"),
+        )
+
+        add_gitignore(answers.get("gitginore_template"))# add gitignore
+
+        #github authorization
         gh = Github(config_obj["auth"]["token"])
-        # uncomment only when testing
         user = gh.get_user()
+        # create github repo
         repo = user.create_repo(
             answers.get("repo_name"),
             description=answers.get("description"),
@@ -156,12 +178,6 @@ def init():
         pass
     else:
         click.echo("creating repository...Please wait")
-        add_readme(
-            answers.get("readme_confirm"),
-            answers.get("repo_name"),
-            answers.get("description"),
-        )
-        add_gitignore(answers.get("gitginore_template"))
         click.echo("pushing file to remote")
         execute_git(
             config_obj["auth"]["username"],
