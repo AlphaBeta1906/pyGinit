@@ -23,8 +23,8 @@ pip install --editable . # install it globally so you can use it everywhere
 
 ## Usage
 
-### authetincation :
-You need to add token,username and password of your github account using :
+### Authentication :
+You need to add token and username of your github account using :
 
 ```bash
 pyGinit set-auth <YOUR_GITHUB_TOKEN> <YOUR_GITHUB_USERNAME>
@@ -33,7 +33,7 @@ use the same command to change your auth value
 
 ### repository initalization : 
 
-go to your porject directory where you want to create local and remote repository for it. and then type :
+go to your project directory where you want to create local and remote repository for it. and then type :
 ```bash
 pyGinit init
 ```
