@@ -31,4 +31,9 @@ questions = [
         "name": "readme_confirm",
         "message": "Do you want to create readme for your repo ? ",
     },
+    {
+        "type": "input",
+        "name": "remote_name",
+        "message": "input your remote name name(default:origin)",
+    }
 ]

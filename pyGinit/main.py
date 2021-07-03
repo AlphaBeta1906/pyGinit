@@ -183,6 +183,7 @@ def init():
             config_obj["auth"]["username"],
             config_obj["auth"]["token"],
             answers.get("repo_name"),
+            answers.get("remote_name")
         )
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
 
