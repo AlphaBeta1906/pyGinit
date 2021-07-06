@@ -22,11 +22,11 @@ config_obj = ConfigParser()
 
 @click.group()
 @click.version_option("0.2.0", help="Show version")
-def pyGinit():
+def pyginit():
     """pyGinit a simple cli automation tools
     to initalize both local and remote repository
 
-    version : 0.2.0
+    version : 0.2.1-beta
     """
     pass
 
@@ -74,7 +74,7 @@ def add_gitignore(gitginore_template):
         exit()
 
 
-@pyGinit.command()
+@pyginit.command()
 def init():
     """ initialize local git repository and create remote github repository """
     answers = prompt(questions, style=custom_style_2)
@@ -90,7 +90,7 @@ def init():
             click.echo(
                 "Local repository already exists"
             )
-        click.echo("program stopped")
+        click.echo("Local repository already exists, pyGinit only accept directory without git")
         exit()
     try:
         # check both remote and local repository are exist
@@ -118,9 +118,7 @@ def init():
             answers.get("repo_name"),
             answers.get("description"),
         )
-
         add_gitignore(answers.get("gitginore_template"))# add gitignore
-
         #github authorization
         gh = Github(config_obj["auth"]["token"])
         user = gh.get_user()
@@ -130,6 +128,9 @@ def init():
             description=answers.get("description"),
             private=private,
         )
+
+        """
+        """
 
     except KeyError:
         click.echo(
@@ -188,7 +189,7 @@ def init():
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
 
 
-@pyGinit.command(options_metavar="<options>")
+@pyginit.command(options_metavar="<options>")
 @click.argument("token", metavar="<github_token>")
 @click.argument("username", metavar="<github_username>")
 def set_auth(token, username):
