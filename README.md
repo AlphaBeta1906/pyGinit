@@ -1,4 +1,6 @@
 [![Python package](https://github.com/AlphaBeta1906/pyGinit/actions/workflows/python-package.yml/badge.svg)](https://github.com/AlphaBeta1906/pyGinit/actions/workflows/python-package.yml)
+![GitHub](https://img.shields.io/github/license/AlphaBeta1906/pyGinit?style=flat-square)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pyGinit)
 # pyGinit
 
 pyGinit is a command line tools that help you to initialize your current project a local git repo and remote repo
