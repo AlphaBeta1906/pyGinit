@@ -2,7 +2,7 @@ from setuptools import setup,find_packages
 long_description =open('README.md').read()
 setup(
     name="pyGinit",
-    version="0.2.0",
+    version="0.2.1",
     description = "a simple cli tools for automation git repository creation",
     long_description = long_description,
     packages=find_packages(),
@@ -28,7 +28,7 @@ setup(
     install_requires=["Click", "PyInquirer","Gitpython","pyGithub","Colorama"],
     entry_points="""
         [console_scripts]
-        pyGinit= pyGinit.main:pyGinit
+        pyginit= pyGinit.main:pyginit
     """,
     python_requires='>=3.7'
 )
