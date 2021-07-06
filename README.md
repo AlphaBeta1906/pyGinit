@@ -31,6 +31,9 @@ pyGinit set-auth <YOUR_GITHUB_TOKEN> <YOUR_GITHUB_USERNAME>
 ```
 use the same command to change your auth value
 
+#### is it secure ?
+it is, your authentication data are saved locally in `.pyGinitconfig.ini` in your home directory
+
 ### repository initalization : 
 
 go to your project directory where you want to create local and remote repository for it. and then type :
@@ -39,6 +42,8 @@ pyGinit init
 ```
 all you need is to fill out inquirer by `pyInquirer` and let `pyGinit` do the rest, from creating local repository,remote github repository, and push your directory to github 
 _Note: make sure the directory is not a local git repository_
+
+
 
 
 
