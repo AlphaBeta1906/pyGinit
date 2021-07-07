@@ -9,7 +9,7 @@ setup(
     include_package_data=True,
     long_description_content_type='text/markdown',
     url='https://github.com/AlphaBeta1906/pyGinit',
-    download_url = 'https://github.com/AlphaBeta1906/pyGinit/archive/refs/tags/v0.2.0.tar.gz',
+    download_url = 'https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.2.1',
     author="fariz",
     author_email = "farizi1906@gmail.com",
     license="MIT",
