@@ -17,16 +17,19 @@ from .inquirer import questions
 init()
 config_obj = ConfigParser()
 
+# TODO : check remote repository if exist
+# TODO : add new command 'remote' to create (empty)-remote repository only
+# TODO : add configuration so user that contains 
+#        customization or default value by user,e.g : change styles,set defaul value etc
 # TODO : add ssh
-# TODO : user can custom remote name
 
 @click.group()
-@click.version_option("0.2.0", help="Show version")
+@click.version_option("0.2.1", help="Show version")
 def pyginit():
     """pyGinit a simple cli automation tools
     to initalize both local and remote repository
 
-    version : 0.2.1-beta
+    version : 0.2.1
     """
     pass
 
@@ -69,7 +72,7 @@ def add_gitignore(gitginore_template):
         click.echo(
             Fore.RED
             + Style.BRIGHT
-            + "Error:Connection error when downloading .gitginore template"
+            + "Error:Connection error when downloading gitginore template"
         )
         exit()
 
@@ -111,7 +114,6 @@ def init():
         if exception happen(connection error,wrong inpu etc) repository(local and remote)
         is not created
         """
-
         # add readme
         add_readme(
             answers.get("readme_confirm"),
@@ -180,6 +182,10 @@ def init():
     else:
         click.echo("creating repository...Please wait")
         click.echo("pushing file to remote")
+
+        # initialize local git and push it to remote
+        # if user cancel the pushing process, 
+        # only remote repository are created(empty repo)
         execute_git(
             config_obj["auth"]["username"],
             config_obj["auth"]["token"],
