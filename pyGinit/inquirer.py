@@ -1,7 +1,4 @@
-from prompt_toolkit.validation import Validator, ValidationError
 from .gitignoreList import gitignore
-import os
-import sys
 
 questions = [
     {
