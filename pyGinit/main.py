@@ -62,8 +62,8 @@ def add_gitignore(gitginore_template):
                 + ".gitignore"
             )
             """ download gitignore template from github repository(yeah...repository github account itself) """
-            dowonload = requests.get(url)
-            open(".gitignore", "wb").write(dowonload.content)
+            download = requests.get(url)
+            open(".gitignore", "wb").write(download.content)
         elif gitginore_template == ".gitignore":
             open(".gitignore").close()
         else:
@@ -76,6 +76,19 @@ def add_gitignore(gitginore_template):
         )
         exit()
 
+def check_git_exist():
+    """
+    check wether local git is exist or not
+    """
+    if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
+        pass
+    else:
+        if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
+            click.echo(
+                "Local repository already exists"
+            )
+        click.echo("Local repository already exists, pyGinit only accept directory without git")
+        exit()
 
 @pyginit.command()
 def init():
@@ -86,17 +99,9 @@ def init():
     url_check = "https://github.com/{username}/{repo_name}".format(
         username=config_obj["auth"]["username"], repo_name=answers.get("repo_name")
     )
-    if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
-        pass
-    else:
-        if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
-            click.echo(
-                "Local repository already exists"
-            )
-        click.echo("Local repository already exists, pyGinit only accept directory without git")
-        exit()
     try:
         # check both remote and local repository are exist
+        check_git_exist()
         # if not program will continue
 
         """
