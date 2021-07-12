@@ -17,8 +17,10 @@ from .inquirer import questions
 init()
 config_obj = ConfigParser()
 
-# TODO : check remote repository if exist
+# TODO : check remote repository is exist
+# TODO : add option command so user can initiazlize with only one line
 # TODO : add new command 'remote' to create (empty)-remote repository only
+# TODO : add feature to add license
 # TODO : add configuration so user that contains 
 #        customization or default value by user,e.g : change styles,set defaul value etc
 # TODO : add ssh
@@ -114,12 +116,23 @@ def init():
         for now let's just use these code below
         """
 
+
+        gh = Github(config_obj["auth"]["token"])
+        try:
+            repo = gh.get_repo(config_obj["auth"]["username"]+"/"+answers.get("repo_name"))
+        except:
+            pass # if repository not exist/get exception it means program can continue 
+        else:
+            click.echo(Fore.YELLOW + Style.BRIGHT + "Remote repository already exist at: " + repo.clone_url())
+            click.echo(Fore.YELLOW + Style.BRIGHT + "Program stopped")
+            exit()
+
         """  
         main parts where remote repositorty are created 
         if exception happen(connection error,wrong inpu etc) repository(local and remote)
         is not created
-        """
         # add readme
+        """
         add_readme(
             answers.get("readme_confirm"),
             answers.get("repo_name"),
@@ -127,7 +140,6 @@ def init():
         )
         add_gitignore(answers.get("gitginore_template"))# add gitignore
         #github authorization
-        gh = Github(config_obj["auth"]["token"])
         user = gh.get_user()
         # create github repo
         repo = user.create_repo(
