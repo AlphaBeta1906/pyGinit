@@ -53,7 +53,8 @@ Please make sure to update tests as appropriate.
 [MIT](https://github.com/AlphaBeta1906/pyGinit/blob/master/LICENSE)
 
 ## Development status :
-[v0.2.0](https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.2.0).  
+[v0.2.1](https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.2.1)  
+[v0.2.0](https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.2.0)  
 [v0.1.9](https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.1.9)  
 [v0.1.7](https://github.com/AlphaBeta1906/pyGinit/releases/tag/V0.1.7)  
 [v0.1.6-beta](https://github.com/AlphaBeta1906/pyGinit/releases/tag/v0.1.6-beta)    
