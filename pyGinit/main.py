@@ -14,13 +14,16 @@ import time
 from .gitCommand import execute_git
 from .inquirer import questions
 
-init()
+init(autoreset=True)
 config_obj = ConfigParser()
+parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
+
+gh = Github(config_obj["auth"]["token"])
 
 # TODO : check remote repository is exist
-# TODO : add option command so user can initiazlize with only one line
 # TODO : add new command 'remote' to create (empty)-remote repository only
 # TODO : add feature to add license
+# TODO : add option command so user can initiazlize with only one line
 # TODO : add configuration so user that contains 
 #        customization or default value by user,e.g : change styles,set defaul value etc
 # TODO : add ssh
@@ -92,17 +95,26 @@ def check_git_exist():
         click.echo("Local repository already exists, pyGinit only accept directory without git")
         exit()
 
+"""
+still under development
+def create_repo(repo_name:str,description:str,private:bool):
+    user = gh.get_user()
+    # create github repo
+    repo = user.create_repo(
+        repo_name,
+        description,
+        private,
+    )
+"""
 @pyginit.command()
 def init():
     """ initialize local git repository and create remote github repository """
     answers = prompt(questions, style=custom_style_2)
     private = True if answers.get("repo_type") == "private" else False
     parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
-    url_check = "https://github.com/{username}/{repo_name}".format(
-        username=config_obj["auth"]["username"], repo_name=answers.get("repo_name")
-    )
+
     try:
-        # check both remote and local repository are exist
+        # check local repository are exist
         check_git_exist()
         # if not program will continue
 
@@ -117,7 +129,8 @@ def init():
         """
 
 
-        gh = Github(config_obj["auth"]["token"])
+        
+
         try:
             repo = gh.get_repo(config_obj["auth"]["username"]+"/"+answers.get("repo_name"))
         except:
@@ -147,9 +160,8 @@ def init():
             description=answers.get("description"),
             private=private,
         )
+        #create_repo(answers.get("repo_name"), answers.get("description"), private)
 
-        """
-        """
 
     except KeyError:
         click.echo(
@@ -226,3 +238,8 @@ def set_auth(token, username):
             config_obj.write(conf)
     except Exception as e:
         print(e)
+
+@pyginit.command()
+def remote():
+    """create empty remote repository only"""
+    click.echo("create remote repository only")

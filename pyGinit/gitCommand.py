@@ -12,7 +12,7 @@ def execute_git(username, token, repo_name,remote_name):
     """
     initialize git repository and push to remote
     """
-    remote_name = "origin" if remote_name.isspace() else remote_name
+    remote_name = "origin" if not remote_name else remote_name
     url = "https://{username}:{token}@github.com/{username}/{repo_name}.git".format(
         username=username, repo_name=repo_name.replace(" ", "-"), token=token
     )
