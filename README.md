@@ -1,4 +1,3 @@
-[![Python package](https://github.com/AlphaBeta1906/pyGinit/actions/workflows/python-package.yml/badge.svg)](https://github.com/AlphaBeta1906/pyGinit/actions/workflows/python-package.yml)
 ![GitHub](https://img.shields.io/github/license/AlphaBeta1906/pyGinit?style=flat-square)
 # pyGinit
 
@@ -32,6 +31,10 @@ pyginit set-auth <YOUR_GITHUB_TOKEN> <YOUR_GITHUB_USERNAME>
 ```
 use the same command to change your auth value
 
+if you dont know how to get your github token, you can see [this](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+
+all your token are save in `.pyGinitconfig.ini` at home path, so you will be secure
+
 ### repository initalization : 
 
 go to your project directory where you want to create local and remote repository for it. and then type :
@@ -47,7 +50,6 @@ _Note: make sure the directory is not a local git repository_
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://github.com/AlphaBeta1906/pyGinit/blob/master/LICENSE)
