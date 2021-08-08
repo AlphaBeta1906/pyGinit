@@ -24,9 +24,10 @@ gh = Github(config_obj["auth"]["token"])
 # TODO : add new command 'remote' to create (empty)-remote repository only
 # TODO : add feature to add license
 # TODO : add option command so user can initiazlize with only one line
-# TODO : add configuration so user that contains 
+# TODO : add configuration so user that contains
 #        customization or default value by user,e.g : change styles,set defaul value etc
 # TODO : add ssh
+
 
 @click.group()
 @click.version_option("0.2.1", help="Show version")
@@ -56,7 +57,7 @@ def add_gitignore(gitginore_template):
     add gitignore template if the parameter is not equal None
 
             parameters :
-                gitginore_template(str) : gitignore template name e.g python,javascript etc         
+                gitginore_template(str) : gitignore template name e.g python,javascript etc
     """
     gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
     try:
@@ -64,7 +65,6 @@ def add_gitignore(gitginore_template):
             url = (
                 "https://raw.githubusercontent.com/github/gitignore/master/"
                 + gitginore_template.strip(" ")
-                + ".gitignore"
             )
             """ download gitignore template from github repository(yeah...repository github account itself) """
             download = requests.get(url)
@@ -81,6 +81,7 @@ def add_gitignore(gitginore_template):
         )
         exit()
 
+
 def check_git_exist():
     """
     check wether local git is exist or not
@@ -89,11 +90,12 @@ def check_git_exist():
         pass
     else:
         if call(["git", "branch"], stderr=STDOUT, stdout=open(devnull, "w")) != 0:
-            click.echo(
-                "Local repository already exists"
-            )
-        click.echo("Local repository already exists, pyGinit only accept directory without git")
+            click.echo("Local repository already exists")
+        click.echo(
+            "Local repository already exists, pyGinit only accept directory without git"
+        )
         exit()
+
 
 """
 still under development
@@ -106,9 +108,11 @@ def create_repo(repo_name:str,description:str,private:bool):
         private,
     )
 """
+
+
 @pyginit.command()
 def init():
-    """ initialize local git repository and create remote github repository """
+    """initialize local git repository and create remote github repository"""
     answers = prompt(questions, style=custom_style_2)
     private = True if answers.get("repo_type") == "private" else False
     parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
@@ -128,15 +132,19 @@ def init():
         for now let's just use these code below
         """
 
-
-        
-
         try:
-            repo = gh.get_repo(config_obj["auth"]["username"]+"/"+answers.get("repo_name"))
+            repo = gh.get_repo(
+                config_obj["auth"]["username"] + "/" + answers.get("repo_name")
+            )
         except:
-            pass # if repository not exist/get exception it means program can continue 
+            pass  # if repository not exist/get exception it means program can continue
         else:
-            click.echo(Fore.YELLOW + Style.BRIGHT + "Remote repository already exist at: " + repo.clone_url())
+            click.echo(
+                Fore.YELLOW
+                + Style.BRIGHT
+                + "Remote repository already exist at: "
+                + repo.clone_url()
+            )
             click.echo(Fore.YELLOW + Style.BRIGHT + "Program stopped")
             exit()
 
@@ -151,8 +159,8 @@ def init():
             answers.get("repo_name"),
             answers.get("description"),
         )
-        add_gitignore(answers.get("gitginore_template"))# add gitignore
-        #github authorization
+        add_gitignore(answers.get("gitginore_template"))  # add gitignore
+        # github authorization
         user = gh.get_user()
         # create github repo
         repo = user.create_repo(
@@ -160,14 +168,14 @@ def init():
             description=answers.get("description"),
             private=private,
         )
-        #create_repo(answers.get("repo_name"), answers.get("description"), private)
-
+        # create_repo(answers.get("repo_name"), answers.get("description"), private)
 
     except KeyError:
         click.echo(
             Fore.RED
             + Style.BRIGHT
-            + "Error : github token not found,use set-auth command to set your token and username"
+            + "Error : github token not found,use set-auth command to set your token"
+            " and username"
         )
 
     #  two exception below are throw when some prompt are not filled or user abort the command
@@ -176,14 +184,14 @@ def init():
     except TypeError:
         exit()
 
-
     except BadCredentialsException:
         click.echo(
             Fore.RED
             + Style.BRIGHT
-            + "Error : authrization error. have you entered the correct token and username?"
+            + "Error : authrization error. have you entered the correct token and"
+            " username?"
         )
-    #? How to get github error message?
+    # ? How to get github error message?
     except GithubException as e:
         click.echo(Fore.RED + Style.BRIGHT + "Error when creating remote repository")
         raise e
@@ -213,13 +221,13 @@ def init():
         click.echo("pushing file to remote")
 
         # initialize local git and push it to remote
-        # if user cancel the pushing process, 
+        # if user cancel the pushing process,
         # only remote repository are created(empty repo)
         execute_git(
             config_obj["auth"]["username"],
             config_obj["auth"]["token"],
             answers.get("repo_name"),
-            answers.get("remote_name")
+            answers.get("remote_name"),
         )
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
 
@@ -228,18 +236,17 @@ def init():
 @click.argument("token", metavar="<github_token>")
 @click.argument("username", metavar="<github_username>")
 def set_auth(token, username):
-    """ set your github token and username """
+    """set your github token and username"""
     try:
-        config_obj["auth"] = {
-            "token": token,
-            "username": username,
-        }
+        config_obj["auth"] = {"token": token, "username": username}
         with open(path.join(Path.home(), ".pyGinitconfig.ini"), "w") as conf:
             config_obj.write(conf)
     except Exception as e:
         print(e)
 
+
+"""
 @pyginit.command()
 def remote():
-    """create empty remote repository only"""
     click.echo("create remote repository only")
+"""
