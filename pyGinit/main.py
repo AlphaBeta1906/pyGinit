@@ -33,7 +33,7 @@ gh = Github(config_obj["auth"]["token"])
 @click.version_option("0.2.2", help="Show version")
 def pyginit():
     """pyGinit a simple cli automation tools
-    to initalize both local and remote repository
+    to initalize both local and github remote repository
 
     version : 0.2.2
     """
