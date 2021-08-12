@@ -77,21 +77,30 @@ def check_git_exist():
 
 
 def check_args(*args):
+    (
+        repo_name,
+        description,
+        remote_name,
+        private,
+        readme_confirm,
+        gitginore_template,
+    ) = args
     print(args)
-    print(args[1])
 
 
 # still under development
-def create_repo(
-    repo_name: str,
-    description: str,
-    remote_name: str,
-    private: str,
-    readme_confirm,
-    gitginore_template,
-    command="all",
-):
-    private = True if private == "private" else False
+def create_repo(*args, command="all"):
+    (
+        repo_name,
+        description,
+        remote_name,
+        private,
+        readme_confirm,
+        gitginore_template,
+    ) = args
+
+    private = False if private == "private" else True
+    print(private == "private")
     try:
         parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
@@ -127,12 +136,14 @@ def create_repo(
         is not created
         # add readme
         """
-        add_readme(readme_confirm, repo_name, description)
-        add_gitignore(gitginore_template)  # add gitignore
+
         # github authorization
         user = gh.get_user()
         # create github repo
         repo = user.create_repo(repo_name, description=description, private=private)
+        if command == "all":
+            add_readme(readme_confirm, repo_name, description)
+            add_gitignore(gitginore_template)  # add gitignore
         # create_repo(answers.get("repo_name"), answers.get("description"), private)
 
     except KeyError:
@@ -145,9 +156,9 @@ def create_repo(
 
     #  two exception below are throw when some prompt are not filled or user abort the command
     except AssertionError as e:
-        raise e
+        exit()
     except TypeError as e:
-        raise e
+        exit()
 
     except BadCredentialsException:
         click.echo(
@@ -159,7 +170,7 @@ def create_repo(
     # ? How to get github error message?
     except GithubException as e:
         click.echo(Fore.RED + Style.BRIGHT + "Error when creating remote repository")
-        raise e
+        click.echo(e)
 
     except requests.exceptions.ConnectionError:
         click.echo(
@@ -182,17 +193,21 @@ def create_repo(
     except AttributeError:
         pass
     else:
-        click.echo("creating repository...Please wait")
-        click.echo("pushing file to remote")
 
-        # initialize local git and push it to remote
-        # if user cancel the pushing process,
-        # only remote repository are created(empty repo)
         if command == "all":
+            # initialize local git and push it to remote
+            # if user cancel the pushing process,
+            # only remote repository are created(empty repo)
+            click.echo("creating repository...Please wait")
+            click.echo("pushing file to remote")
             execute_git(
                 config_obj["auth"]["username"],
                 config_obj["auth"]["token"],
                 repo_name,
                 remote_name,
             )
+        click.echo(
+            'repository succesfully created at :'
+            + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name}.git'
+        )
         click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")

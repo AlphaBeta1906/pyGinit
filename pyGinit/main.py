@@ -32,7 +32,7 @@ def pyginit():
     """pyGinit a simple cli automation tools
     to initalize both local and github remote repository
 
-    version : 0.2.2
+    version : 0.3.0
     """
     pass
 
@@ -67,8 +67,16 @@ def set_auth(token, username):
         print(e)
 
 
-"""
 @pyginit.command()
 def remote():
-    click.echo("create remote repository only")
-"""
+    """create empty github repository"""
+    answers = prompt(questions[0:3], style=custom_style_2)
+    create_repo(
+        answers.get("repo_name"),
+        answers.get("description"),
+        answers.get("remote_name"),
+        answers.get("private"),
+        None,
+        None,
+        command="remote",
+    )

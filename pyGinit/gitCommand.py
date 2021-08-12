@@ -22,7 +22,3 @@ def execute_git(username, token, repo_name, remote_name):
     repo.git.push(url, "HEAD:master")
     repo.create_remote(remote_name, url)
     print(f'remote name : {remote_name}')
-    print(
-        'repository succesfully created at :'
-        + f'https://github.com/{username}/{repo_name}.git'
-    )
