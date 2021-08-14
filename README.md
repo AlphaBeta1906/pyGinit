@@ -5,7 +5,7 @@ pyGinit is a command line tools that help you to initialize your current project
 
 ## Requirements
 Requirements before install pyGinit:
-1. a github account and it's personal acces token
+1. a github account and it's personal access token
 2. git 1.70 or newer
 3. python >= 3.7
 
@@ -14,10 +14,10 @@ using pip :
 ```bash
 pip install pyGinit
 ```
-from this repository(maybe not stable) :
+from this repository(may not stable) :
 ```bash
 git clone  https://github.com/AlphaBeta1906/pyGinit.git
-cd path/to/pyGinit
+cd pyGinit
 pip install --editable . # install it globally so you can use it everywhere
 ```
 
@@ -42,8 +42,16 @@ go to your project directory where you want to create local and remote repositor
 pyginit init
 ```
 all you need is to fill out inquirer by `pyInquirer` and let `pyGinit` do the rest, from creating local repository,remote github repository, and push your directory to github   
-_Note: make sure the directory is not a local git repository_
 
+**_Note: make sure the directory is not a local git repository_**
+
+### create empty github repository
+open your terminal and following command:  
+```bash
+pyginit remote
+```
+
+inquirer will appear and then pyGinit will crate a empty github repository 
 
 
 
