@@ -134,9 +134,7 @@ def create_repo(*args, command="all"):
         main parts where remote repositorty are created 
         if exception happen(connection error,wrong inpu etc) repository(local and remote)
         is not created
-        # add readme
         """
-
         # github authorization
         user = gh.get_user()
         # create github repo

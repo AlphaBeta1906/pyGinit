@@ -24,10 +24,11 @@ parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 # TODO : add configuration so user that contains
 #        customization or default value by user,e.g : change styles,set defaul value etc
 # TODO : add ssh
+# TODO : maybe add support for code host other than github,like gitlab,gitbucket etc
 
 
 @click.group()
-@click.version_option("0.2.2", help="Show version")
+@click.version_option("0.3.0", help="Show version")
 def pyginit():
     """pyGinit a simple cli automation tools
     to initalize both local and github remote repository
@@ -53,6 +54,19 @@ def init():
         answers.get("gitginore_template"),
     )
 
+@pyginit.command()
+def remote():
+    """create empty github repository"""
+    answers = prompt(questions[0:3], style=custom_style_2)
+    create_repo(
+        answers.get("repo_name"),
+        answers.get("description"),
+        answers.get("remote_name"),
+        answers.get("private"),
+        None,
+        None,
+        command="remote",
+    )
 
 @pyginit.command(options_metavar="<options>")
 @click.argument("token", metavar="<github_token>")
@@ -67,16 +81,8 @@ def set_auth(token, username):
         print(e)
 
 
+
 @pyginit.command()
-def remote():
-    """create empty github repository"""
-    answers = prompt(questions[0:3], style=custom_style_2)
-    create_repo(
-        answers.get("repo_name"),
-        answers.get("description"),
-        answers.get("remote_name"),
-        answers.get("private"),
-        None,
-        None,
-        command="remote",
-    )
+def status():
+    """search github repo"""
+    click.echo("search a github repo")
