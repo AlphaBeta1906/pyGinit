@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 long_description = open('README.md').read()
 setup(
     name="pyGinit",
-    version="0.2.2",
+    version="0.2.5",
     description="a simple cli tools for automation git repository creation",
     long_description=long_description,
     packages=find_packages(),
@@ -11,7 +11,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/AlphaBeta1906/pyGinit',
     download_url=(
-        'https://github.com/AlphaBeta1906/pyGinit/archive/refs/tags/0.2.2.tar.gz'
+        'https://github.com/AlphaBeta1906/pyGinit/archive/refs/tags/v0.2.5.tar.gz'
     ),
     author="fariz",
     author_email="farizi1906@gmail.com",
