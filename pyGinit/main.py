@@ -28,12 +28,12 @@ parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
 
 @click.group()
-@click.version_option("0.3.0", help="Show version")
+@click.version_option("0.2.5", help="Show version")
 def pyginit():
     """pyGinit a simple cli automation tools
     to initalize both local and github remote repository
 
-    version : 0.3.0
+    version : 0.2.5
     """
     pass
 
@@ -54,6 +54,7 @@ def init():
         answers.get("gitginore_template"),
     )
 
+
 @pyginit.command()
 def remote():
     """create empty github repository"""
@@ -68,6 +69,7 @@ def remote():
         command="remote",
     )
 
+
 @pyginit.command(options_metavar="<options>")
 @click.argument("token", metavar="<github_token>")
 @click.argument("username", metavar="<github_username>")
@@ -79,7 +81,6 @@ def set_auth(token, username):
             config_obj.write(conf)
     except Exception as e:
         print(e)
-
 
 
 @pyginit.command()
