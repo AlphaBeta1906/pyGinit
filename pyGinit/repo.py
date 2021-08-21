@@ -5,6 +5,7 @@ from github.GithubException import GithubException, BadCredentialsException
 from colorama import init, Fore, Style
 from os import path, system, devnull
 from subprocess import Popen, call, STDOUT, PIPE
+from bs4 import BeautifulSoup
 import requests
 
 from configparser import ConfigParser
@@ -61,6 +62,29 @@ def add_gitignore(gitginore_template):
         exit()
 
 
+def addLicense(license):
+    try:
+        license_dict = {
+            "MIT": "mit",
+            "Gnu gpl v3": "gpl-3.0",
+            "Apache license 2.0": "apache-2.0",
+        }
+        if license != "None":
+            url = requests.get(
+                f'https://choosealicense.com/licenses/{license_dict[license]}/'
+            )
+            html = BeautifulSoup(url.content, 'html.parser')
+            license_content = html.find(id="license-text").get_text()
+            open("LICENSE", "w").write(license_content)
+    except requests.ConnectionError:
+        click.echo(
+            Fore.RED
+            + Style.BRIGHT
+            + "Error:Connection error when downloading gitginore template"
+        )
+        exit()
+
+
 def check_git_exist():
     """
     check wether local git is exist or not
@@ -97,6 +121,7 @@ def create_repo(*args, command="all"):
         private,
         readme_confirm,
         gitginore_template,
+        license,
     ) = args
 
     private = False if private == "private" else True
@@ -140,7 +165,8 @@ def create_repo(*args, command="all"):
         repo = user.create_repo(repo_name, description=description, private=private)
         if command == "all":
             add_readme(readme_confirm, repo_name, description)
-            add_gitignore(gitginore_template)  # add gitignore
+            add_gitignore(gitginore_template)
+            addLicense(license)
         # create_repo(answers.get("repo_name"), answers.get("description"), private)
 
     except KeyError:
@@ -153,9 +179,9 @@ def create_repo(*args, command="all"):
 
     #  two exception below are throw when some prompt are not filled or user abort the command
     except AssertionError as e:
-        exit()
+        raise e
     except TypeError as e:
-        exit()
+        raise e
 
     except BadCredentialsException:
         click.echo(

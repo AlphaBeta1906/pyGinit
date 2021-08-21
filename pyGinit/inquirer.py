@@ -1,11 +1,9 @@
 from .gitignoreList import gitignore
 
+licenses = ["None", "MIT", "Gnu gpl v3", "Apache license 2.0"]
+
 questions = [
-    {
-        "type": "input",
-        "name": "repo_name",
-        "message": "Enter the name of your repo : ",
-    },
+    {"type": "input", "name": "repo_name", "message": "Enter the name of your repo : "},
     {
         "type": "input",
         "name": "description",
@@ -24,6 +22,12 @@ questions = [
         "choices": gitignore,
     },
     {
+        "type": "list",
+        "name": "license_name",
+        "message": "choose a license",
+        "choices": licenses,
+    },
+    {
         "type": "confirm",
         "name": "readme_confirm",
         "message": "Do you want to create readme for your repo ? ",
@@ -32,5 +36,5 @@ questions = [
         "type": "input",
         "name": "remote_name",
         "message": "input your remote name name(default:origin)",
-    }
+    },
 ]
