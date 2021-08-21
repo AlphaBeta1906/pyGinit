@@ -1,7 +1,7 @@
 import click
 
 from github import Github
-from PyInquirer import prompt
+from PyInquirer import prompt, style_from_dict, Token
 from examples import custom_style_2
 from colorama import init, Fore, Style
 from configparser import ConfigParser
@@ -17,12 +17,8 @@ init(autoreset=True)
 config_obj = ConfigParser()
 parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
-
-# TODO : add new command 'remote' to create (empty)-remote repository only
 # TODO : add feature to add license
 # TODO : add option command so user can initiazlize with only one line
-# TODO : add configuration so user that contains
-#        customization or default value by user,e.g : change styles,set defaul value etc
 # TODO : add ssh
 # TODO : maybe add support for code host other than github,like gitlab,gitbucket etc
 
@@ -52,12 +48,13 @@ def init():
         answers.get("private"),
         answers.get("readme_confirm"),
         answers.get("gitginore_template"),
+        answers.get("license_name"),
     )
 
 
 @pyginit.command()
 def remote():
-    """create empty github repository"""
+    """create empty github repository only"""
     answers = prompt(questions[0:3], style=custom_style_2)
     create_repo(
         answers.get("repo_name"),
@@ -70,7 +67,7 @@ def remote():
     )
 
 
-@pyginit.command(options_metavar="<options>")
+@pyginit.command()
 @click.argument("token", metavar="<github_token>")
 @click.argument("username", metavar="<github_username>")
 def set_auth(token, username):
@@ -81,9 +78,3 @@ def set_auth(token, username):
             config_obj.write(conf)
     except Exception as e:
         print(e)
-
-
-@pyginit.command()
-def status():
-    """search github repo"""
-    click.echo("search a github repo")
