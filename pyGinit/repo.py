@@ -44,7 +44,7 @@ def add_gitignore(gitginore_template):
     try:
         if not gitginore_template == "None":
             url = (
-                f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}'
+                f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}.gitignore'
             )
             """ download gitignore template from github repository(yeah...repository github account itself) """
             download = requests.get(url)
@@ -179,9 +179,9 @@ def create_repo(*args, command="all"):
 
     #  two exception below are throw when some prompt are not filled or user abort the command
     except AssertionError as e:
-        raise e
+        exit()
     except TypeError as e:
-        raise e
+        exit()
 
     except BadCredentialsException:
         click.echo(

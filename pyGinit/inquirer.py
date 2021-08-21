@@ -19,7 +19,7 @@ questions = [
         "type": "list",
         "name": "gitginore_template",
         "message": "Select gitginore template for your repo",
-        "choices": gitignore,
+        "choices": [g.split(".")[0] for g in gitignore],
     },
     {
         "type": "list",
