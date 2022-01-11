@@ -45,7 +45,7 @@ def init():
         answers.get("repo_name"),
         answers.get("description"),
         answers.get("remote_name"),
-        answers.get("private"),
+        answers.get("repo_type"),
         answers.get("readme_confirm"),
         answers.get("gitginore_template"),
         answers.get("license_name"),
