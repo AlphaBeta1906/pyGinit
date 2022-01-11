@@ -215,7 +215,7 @@ def create_repo(*args, command="all"):
         pass
     else:
 
-        if command == "all":
+        if command == "all" and repo_name:
             # initialize local git and push it to remote
             # if user cancel the pushing process,
             # only remote repository are created(empty repo)
@@ -227,8 +227,10 @@ def create_repo(*args, command="all"):
                 repo_name,
                 remote_name,
             )
-        click.echo(
-            'repository succesfully created at :'
-            + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name}.git'
-        )
-        click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
+            click.echo(
+                'repository succesfully created at :'
+                + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
+            )
+            click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
+        else:
+            click.echo("repo name empty")
