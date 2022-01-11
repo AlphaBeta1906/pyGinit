@@ -122,8 +122,7 @@ def create_repo(*args, command="all"):
         gitginore_template,
         license,
     ) = args
-
-    private = False if private == "private" else True
+    private = False if private != "private" else True
     try:
         parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
