@@ -109,7 +109,6 @@ def check_args(*args):
         readme_confirm,
         gitginore_template,
     ) = args
-    print(args)
 
 
 # still under development
