@@ -147,7 +147,7 @@ def create_repo(*args, command="all"):
                 Fore.YELLOW
                 + Style.BRIGHT
                 + "Remote repository already exist at: "
-                + repo.clone_url()
+                + repo.clone_url
             )
             click.echo(Fore.YELLOW + Style.BRIGHT + "Program stopped")
             exit()
