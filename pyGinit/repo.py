@@ -176,11 +176,11 @@ def create_repo(*args, command="all"):
         )
 
     #  two exception below are throw when some prompt are not filled or user abort the command
-    except AssertionError as e:
+    except AssertionError as e: 
         exit()
     except TypeError as e:
+        raise e
         exit()
-
     except BadCredentialsException:
         click.echo(
             Fore.RED
