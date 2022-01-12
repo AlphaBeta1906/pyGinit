@@ -63,6 +63,7 @@ def remote():
         answers.get("private"),
         None,
         None,
+        None,
         command="remote",
     )
 
