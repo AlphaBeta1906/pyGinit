@@ -211,26 +211,28 @@ def create_repo(*args, command="all"):
             + Style.BRIGHT
             + "Error : Connection timeout.Please check your internet connetion"
         )
+
     except AttributeError:
         pass
     else:
 
-        if command == "all" and repo_name:
-            # initialize local git and push it to remote
-            # if user cancel the pushing process,
-            # only remote repository are created(empty repo)
-            click.echo("creating repository...Please wait")
-            click.echo("pushing file to remote")
-            execute_git(
-                config_obj["auth"]["username"],
-                config_obj["auth"]["token"],
-                repo_name,
-                remote_name,
-            )
+        if repo_name:
+            if command == "all" : 
+                # initialize local git and push it to remote
+                # if user cancel the pushing process,
+                # only remote repository are created(empty repo)
+                click.echo("creating repository...Please wait")
+                click.echo("pushing file to remote")
+                execute_git(
+                    config_obj["auth"]["username"],
+                    config_obj["auth"]["token"],
+                    repo_name,
+                    remote_name,
+                )
             click.echo(
-                'repository succesfully created at :'
-                + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
-            )
+                    'repository succesfully created at :'
+                    + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
+                )
             click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
         else:
             click.echo("repo name empty")
