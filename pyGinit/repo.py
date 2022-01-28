@@ -43,9 +43,7 @@ def add_gitignore(gitginore_template):
     gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
     try:
         if not gitginore_template == "None":
-            url = (
-                f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}.gitignore'
-            )
+            url = f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}.gitignore'
             """ download gitignore template from github repository(yeah...repository github account itself) """
             download = requests.get(url)
             open(".gitignore", "wb").write(download.content)
@@ -71,9 +69,9 @@ def addLicense(license):
         }
         if license != "None":
             url = requests.get(
-                f'https://choosealicense.com/licenses/{license_dict[license]}/'
+                f"https://choosealicense.com/licenses/{license_dict[license]}/"
             )
-            html = BeautifulSoup(url.content, 'html.parser')
+            html = BeautifulSoup(url.content, "html.parser")
             license_content = html.find(id="license-text").get_text()
             open("LICENSE", "w").write(license_content)
     except requests.ConnectionError:
@@ -176,7 +174,7 @@ def create_repo(*args, command="all"):
         )
 
     #  two exception below are throw when some prompt are not filled or user abort the command
-    except AssertionError as e: 
+    except AssertionError as e:
         exit()
     except TypeError as e:
         raise e
@@ -217,7 +215,7 @@ def create_repo(*args, command="all"):
     else:
 
         if repo_name:
-            if command == "all" : 
+            if command == "all":
                 # initialize local git and push it to remote
                 # if user cancel the pushing process,
                 # only remote repository are created(empty repo)
@@ -230,9 +228,9 @@ def create_repo(*args, command="all"):
                     remote_name,
                 )
             click.echo(
-                    'repository succesfully created at :'
-                    + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
-                )
+                "repository succesfully created at :"
+                + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
+            )
             click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
         else:
             click.echo("repo name empty")
