@@ -17,19 +17,18 @@ init(autoreset=True)
 config_obj = ConfigParser()
 parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
-# TODO : add feature to add license
 # TODO : add option command so user can initiazlize with only one line
 # TODO : add ssh
 # TODO : maybe add support for code host other than github,like gitlab,gitbucket etc
 
 
 @click.group()
-@click.version_option("0.2.6-beta", help="Show version")
+@click.version_option("0.2.8", help="Show version")
 def pyginit():
     """pyGinit a simple cli automation tools
     to initalize both local and github remote repository
 
-    version : 0.2.6-beta
+    version : 0.2.8
     """
     pass
 
