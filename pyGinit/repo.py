@@ -39,7 +39,7 @@ def add_readme(add_readme, title, description=""):
         pass
 
 
-def add_gitignore(gitginore_template):
+def add_gitignore(gitginore_template,test=False):
     """
     add gitignore template if the parameter is not equal None
 
@@ -49,10 +49,12 @@ def add_gitignore(gitginore_template):
     gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
     try:
         if not gitginore_template == "None":
-            url = f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}.gitignore'
             """ download gitignore template from github repository(yeah...repository github account itself) """
-            download = requests.get(url)
-            open(".gitignore", "wb").write(download.content)
+            url = f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}.gitignore'
+            gitignore = requests.get(url)
+            if test:
+                return gitignore.status_code
+            open(".gitignore", "wb").write(gitignore.content)
         elif gitginore_template == ".gitignore":
             open(".gitignore").close()
         else:
@@ -66,17 +68,15 @@ def add_gitignore(gitginore_template):
         exit()
 
 
-def addLicense(license):
+def addLicense(license,test=False):
     try:
-        license_dict = {
-            "MIT": "mit",
-            "Gnu gpl v3": "gpl-3.0",
-            "Apache license 2.0": "apache-2.0",
-        }
         if license != "None":
             url = requests.get(
                 f"https://choosealicense.com/licenses/{license_dict[license]}/"
             )
+            # if test is true function only return http status code from the url
+            if test:
+                return url.status_code
             html = BeautifulSoup(url.content, "html.parser")
             license_content = html.find(id="license-text").get_text()
             open("LICENSE", "w").write(license_content)
