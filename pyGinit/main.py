@@ -11,7 +11,7 @@ from os import path
 
 
 from .inquirer import questions
-from .repo import create_repo, check_args, check_git_exist
+from .repo import create_repo, check_git_exist
 
 init(autoreset=True)
 config_obj = ConfigParser()
