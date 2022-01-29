@@ -24,8 +24,9 @@ license_dict = {
     "Gnu gpl v3": "gpl-3.0",
     "Apache license 2.0": "apache-2.0",
     "Gnu AGPL v3": "agpl-3.0",
-    "Mozilla public license 2.0": "mpl-2.0"
+    "Mozilla public license 2.0": "mpl-2.0",
 }
+
 
 def add_readme(add_readme, title, description=""):
     """
@@ -39,7 +40,7 @@ def add_readme(add_readme, title, description=""):
         pass
 
 
-def add_gitignore(gitginore_template,test=False):
+def add_gitignore(gitginore_template, test=False):
     """
     add gitignore template if the parameter is not equal None
 
@@ -68,7 +69,7 @@ def add_gitignore(gitginore_template,test=False):
         exit()
 
 
-def addLicense(license,test=False):
+def addLicense(license, test=False):
     try:
         if license != "None":
             url = requests.get(
@@ -103,7 +104,8 @@ def check_git_exist():
         )
         exit()
 
-def push_to_remote(repo_name,remote_name):
+
+def push_to_remote(repo_name, remote_name):
     # initialize local git and push it to remote
     # if user cancel the pushing process,
     # only remote repository are created(empty repo)
@@ -115,6 +117,7 @@ def push_to_remote(repo_name,remote_name):
         repo_name,
         remote_name,
     )
+
 
 def create_repo(*args, command="all"):
     (
@@ -223,12 +226,12 @@ def create_repo(*args, command="all"):
 
         if repo_name:
             if command == "all":
-                push_to_remote(repo_name,remote_name)
+                push_to_remote(repo_name, remote_name)
 
             click.echo(
                 "repository succesfully created at :"
-                    + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
-            )        
+                + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
+            )
             click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
         else:
             click.echo("repo name empty")
