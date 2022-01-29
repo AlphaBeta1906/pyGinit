@@ -1,6 +1,6 @@
 from .gitignoreList import gitignore
 
-licenses = ["None", "MIT", "Gnu gpl v3", "Apache license 2.0"]
+licenses = ["None", "MIT", "Gnu gpl v3", "Apache license 2.0","Gnu AGPL v3","Mozilla public license 2.0"]
 
 questions = [
     {"type": "input", "name": "repo_name", "message": "Enter the name of your repo : "},
