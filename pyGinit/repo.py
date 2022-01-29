@@ -19,7 +19,13 @@ init(autoreset=True)
 config_obj = ConfigParser()
 parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 gh = Github(config_obj["auth"]["token"])
-
+license_dict = {
+    "MIT": "mit",
+    "Gnu gpl v3": "gpl-3.0",
+    "Apache license 2.0": "apache-2.0",
+    "Gnu AGPL v3": "agpl-3.0",
+    "Mozilla public license 2.0": "mpl-2.0"
+}
 
 def add_readme(add_readme, title, description=""):
     """
