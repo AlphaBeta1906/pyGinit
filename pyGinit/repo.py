@@ -103,19 +103,19 @@ def check_git_exist():
         )
         exit()
 
-
-def check_args(*args):
-    (
+def push_to_remote(repo_name,remote_name):
+    # initialize local git and push it to remote
+    # if user cancel the pushing process,
+    # only remote repository are created(empty repo)
+    click.echo("creating repository...Please wait")
+    click.echo("pushing file to remote")
+    execute_git(
+        config_obj["auth"]["username"],
+        config_obj["auth"]["token"],
         repo_name,
-        description,
         remote_name,
-        private,
-        readme_confirm,
-        gitginore_template,
-    ) = args
+    )
 
-
-# still under development
 def create_repo(*args, command="all"):
     (
         repo_name,
@@ -127,6 +127,7 @@ def create_repo(*args, command="all"):
         license,
     ) = args
     private = False if private != "private" else True
+
     try:
         parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
@@ -222,21 +223,12 @@ def create_repo(*args, command="all"):
 
         if repo_name:
             if command == "all":
-                # initialize local git and push it to remote
-                # if user cancel the pushing process,
-                # only remote repository are created(empty repo)
-                click.echo("creating repository...Please wait")
-                click.echo("pushing file to remote")
-                execute_git(
-                    config_obj["auth"]["username"],
-                    config_obj["auth"]["token"],
-                    repo_name,
-                    remote_name,
-                )
+                push_to_remote(repo_name,remote_name)
+
             click.echo(
                 "repository succesfully created at :"
-                + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
-            )
+                    + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
+            )        
             click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
         else:
             click.echo("repo name empty")
