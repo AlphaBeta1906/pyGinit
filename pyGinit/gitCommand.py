@@ -1,7 +1,6 @@
 from configparser import ConfigParser
 from pathlib import Path
-from os import path, system, devnull
-from subprocess import Popen, call, STDOUT, PIPE
+from os import path
 import git
 
 config_obj = ConfigParser()
