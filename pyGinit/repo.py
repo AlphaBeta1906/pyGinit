@@ -40,7 +40,7 @@ def add_readme(add_readme, title, description=""):
         pass
 
 
-def add_gitignore(gitginore_template, test=False):
+def add_gitignore(gitginore_template,addtional_gitignore,test=False):
     """
     add gitignore template if the parameter is not equal None
 
@@ -55,7 +55,9 @@ def add_gitignore(gitginore_template, test=False):
             gitignore = requests.get(url)
             if test:
                 return gitignore.status_code
-            open(".gitignore", "wb").write(gitignore.content)
+            additional = "\n".join(addtional_gitignore.split(","))
+            open(".gitignore", "w").write(gitignore.content.decode("utf-8")  + additional)
+                # gitignore.write()
         elif gitginore_template == ".gitignore":
             open(".gitignore").close()
         else:
@@ -128,6 +130,7 @@ def create_repo(*args, command="all"):
         readme_confirm,
         gitginore_template,
         license,
+        additional_gitignore
     ) = args
     private = False if private != "private" else True
 
@@ -171,7 +174,7 @@ def create_repo(*args, command="all"):
         repo = user.create_repo(repo_name, description=description, private=private)
         if command == "all":
             add_readme(readme_confirm, repo_name, description)
-            add_gitignore(gitginore_template)
+            add_gitignore(gitginore_template,additional_gitignore)
             addLicense(license)
         # create_repo(answers.get("repo_name"), answers.get("description"), private)
 
@@ -220,8 +223,8 @@ def create_repo(*args, command="all"):
             + "Error : Connection timeout.Please check your internet connetion"
         )
 
-    except AttributeError:
-        pass
+    except AttributeError as e:
+        print(e)
     else:
 
         if repo_name:

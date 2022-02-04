@@ -48,6 +48,7 @@ def init():
         answers.get("readme_confirm"),
         answers.get("gitginore_template"),
         answers.get("license_name"),
+        answers.get("additional_gitignore")
     )
 
 

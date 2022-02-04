@@ -32,7 +32,7 @@ questions = [
     {
         "type": "list",
         "name": "repo_type",
-        "message": "select your github repo type",
+        "message": "Select your github repo type",
         "choices": ["public", "private"],
     },
     {
@@ -42,9 +42,14 @@ questions = [
         "choices": [g.split(".")[0] for g in gitignore],
     },
     {
+        "type": "input",
+        "name": "additional_gitignore",
+        "message": "Additional gitignore separated by comma(e.g: dist/,file.py,*.py)",
+    },
+    {
         "type": "list",
         "name": "license_name",
-        "message": "choose a license",
+        "message": "Choose a license",
         "choices": licenses,
     },
     {
