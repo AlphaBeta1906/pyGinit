@@ -1,5 +1,6 @@
 gitignore = [
     "None",
+    "Blank",
     "Actionscript.gitignore",
     "Ada.gitignore",
     "Agda.gitignore",

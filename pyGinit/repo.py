@@ -48,18 +48,18 @@ def add_gitignore(gitginore_template,addtional_gitignore,test=False):
                 gitginore_template(str) : gitignore template name e.g python,javascript etc
     """
     gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
+    additional = "\n".join(addtional_gitignore.split(","))
     try:
-        if not gitginore_template == "None":
+        if not gitginore_template == "None" and not gitginore_template == "Blank":
             """ download gitignore template from github repository(yeah...repository github account itself) """
             url = f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}.gitignore'
             gitignore = requests.get(url)
             if test:
                 return gitignore.status_code
-            additional = "\n".join(addtional_gitignore.split(","))
             open(".gitignore", "w").write(gitignore.content.decode("utf-8")  + additional)
                 # gitignore.write()
-        elif gitginore_template == ".gitignore":
-            open(".gitignore").close()
+        elif gitginore_template == "Blank" and not gitginore_template == "None":
+            open(".gitignore","w").write(additional if additional else "")
         else:
             pass
     except requests.exceptions.ConnectionError:
