@@ -44,7 +44,7 @@ questions = [
     {
         "type": "input",
         "name": "additional_gitignore",
-        "message": "Additional gitignore separated by comma(e.g: dist/,file.py,*.py)",
+        "message": "Additional gitignore separated by comma(e.g: dist/,file.py,*.py)skip if gitgnore template is None : ",
     },
     {
         "type": "list",
@@ -60,6 +60,6 @@ questions = [
     {
         "type": "input",
         "name": "remote_name",
-        "message": "input your remote name name(default:origin)",
+        "message": "input your remote name name(default:origin) : ",
     },
 ]
