@@ -3,9 +3,6 @@ from pathlib import Path
 from os import path
 import git
 
-config_obj = ConfigParser()
-parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
-
 
 def execute_git(username, token, repo_name, remote_name):
     """
