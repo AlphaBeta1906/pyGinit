@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pyGsinit"
+name = "pyGinit"
 version = "0.5.1"
 description = "a simple cli tools for automation git repository creation"
 authors = ["fariz <farizi1906@gmail.com>"]
@@ -19,7 +19,7 @@ classifiers=[
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3 :: Only",
 ]
-keywords="automation,tools ,cli,git,github,development"
+keywords=["automation","tools","cli","git","github","development"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -28,7 +28,6 @@ GitPython = "^3.1.27"
 PyGithub = "^1.55"
 colorama = "^0.4.5"
 beautifulsoup4 = "^4.11.1"
-bs4 = "^0.0.1"
 inquirerpy = "^0.3.4"
 
 [tool.poetry.scripts]
