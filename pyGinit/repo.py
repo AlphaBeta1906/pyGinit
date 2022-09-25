@@ -165,7 +165,7 @@ def create_repo(*args, command="all"):
 
         """  
         main parts where remote repositorty are created 
-        if exception happen(connection error,wrong inpu etc) repository(local and remote)
+        if exception happen(connection error,wrong input etc) repository(local and remote)
         is not created
         """
         # github authorization
@@ -176,22 +176,16 @@ def create_repo(*args, command="all"):
             add_readme(readme_confirm, repo_name, description)
             add_gitignore(gitginore_template,additional_gitignore)
             addLicense(license)
-        # create_repo(answers.get("repo_name"), answers.get("description"), private)
+        create_repo(answers.get("repo_name"), answers.get("description"), private)
 
     except KeyError:
         click.echo(
             Fore.RED
             + Style.BRIGHT
-            + "Error : github token not found,use set-auth command to set your token"
-            " and username"
+            + "Error : github token not found,use set-auth command to set your token and username"
         )
 
-    #  two exception below are throw when some prompt are not filled or user abort the command
-    except AssertionError as e:
-        exit()
-    except TypeError as e:
-        raise e
-        exit()
+    
     except BadCredentialsException:
         click.echo(
             Fore.RED
@@ -223,8 +217,6 @@ def create_repo(*args, command="all"):
             + "Error : Connection timeout.Please check your internet connetion"
         )
 
-    except AttributeError as e:
-        print(e)
     else:
 
         if repo_name:
