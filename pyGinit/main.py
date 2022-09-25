@@ -1,8 +1,7 @@
 import click
 
 from github import Github
-from PyInquirer import prompt, style_from_dict, Token
-from examples import custom_style_2
+from InquirerPy import prompt
 from colorama import init, Fore, Style
 from configparser import ConfigParser
 
