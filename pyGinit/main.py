@@ -1,10 +1,8 @@
 import click
-
 from github import Github
 from InquirerPy import prompt
 from colorama import init, Fore, Style
 from configparser import ConfigParser
-
 from pathlib import Path
 from os import path
 
@@ -34,11 +32,11 @@ def pyginit():
 
 @pyginit.command()
 def init():
-    """initialize local git repository and create remote github repository"""
+    """initialize local git repository and create remote github"""
 
     # check local repository are exist
     check_git_exist()
-    answers = prompt(questions, style=custom_style_2)
+    answers = prompt(questions)
     create_repo(
         answers.get("repo_name"),
         answers.get("description"),
@@ -54,7 +52,7 @@ def init():
 @pyginit.command()
 def remote():
     """create empty github repository only"""
-    answers = prompt(questions[0:3], style=custom_style_2)
+    answers = prompt(questions[0:3])
     create_repo(
         answers.get("repo_name"),
         answers.get("description"),
