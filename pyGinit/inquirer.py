@@ -1,14 +1,7 @@
 from prompt_toolkit.validation import Validator, ValidationError
 from .gitignoreList import gitignore
 
-class InputValidator(Validator):
-    def validate(self,document):
-        if not document.text:
-            raise ValidationError(
-                message="Repo name must not empty",
-                cursor_position=len(document.text))  # Move cursor to end            
-
-licenses = [
+  licenses = [
     "None",
     "MIT",
     "Gnu gpl v3",
@@ -22,7 +15,9 @@ questions = [
         "type": "input", 
         "name": "repo_name", 
         "message": "Enter the name of your repo : ",
-        "validate": InputValidator
+        "validate": lambda result: len(result) > 0,
+        "invalid_message": "repo name cannot empty",
+        "transformer": lambda result: result.replace(" ","-")
     },
     {
         "type": "input",
@@ -45,6 +40,7 @@ questions = [
         "type": "input",
         "name": "additional_gitignore",
         "message": "Additional gitignore separated by comma(e.g: dist/,file.py,*.py)skip if gitgnore template is None : ",
+        "when": lambda result: result["gitginore_template"] != "None",
     },
     {
         "type": "list",
