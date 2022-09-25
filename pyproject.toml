@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "pyGsinit"
+version = "0.5.1"
+description = "a simple cli tools for automation git repository creation"
+authors = ["fariz <farizi1906@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "pyGinit"}]
+repository = "https://github.com/AlphaBeta1906/pyGinit"
+homepage = "https://github.com/AlphaBeta1906/pyGinit"
+classifiers=[
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3 :: Only",
+]
+keywords="automation,tools ,cli,git,github,development"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+click = "^8.1.3"
+GitPython = "^3.1.27"
+PyGithub = "^1.55"
+colorama = "^0.4.5"
+beautifulsoup4 = "^4.11.1"
+bs4 = "^0.0.1"
+inquirerpy = "^0.3.4"
+
+[tool.poetry.scripts]
+pyginit = "pyGinit.main:pyginit"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
