@@ -10,15 +10,15 @@ Requirements before install pyGinit:
 3. python >= 3.7
 
 ## Installation
-using pip :
+using pipx :
 ```bash
-pip install pyGinit
+pipx install pyGinit
 ```
 from this repository(may not stable) :
 ```bash
 git clone  https://github.com/AlphaBeta1906/pyGinit.git
 cd pyGinit
-pip install --editable . # install it globally so you can use it everywhere
+poetry build
 ```
 
 ## Usage
