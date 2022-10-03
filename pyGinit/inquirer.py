@@ -1,7 +1,7 @@
 from prompt_toolkit.validation import Validator, ValidationError
 from .gitignoreList import gitignore
 
-  licenses = [
+licenses = [
     "None",
     "MIT",
     "Gnu gpl v3",
