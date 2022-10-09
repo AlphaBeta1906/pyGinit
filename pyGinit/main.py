@@ -20,12 +20,11 @@ parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
 
 @click.group()
-@click.version_option("0.3.1", help="Show version")
+@click.version_option("0.5.1", help="Show version")
 def pyginit():
-    """pyGinit a simple cli automation tools
-    to initalize both local and github remote repository
+    """pyGinit a simple cli automation tools to initalize both local and github remote repository
 
-    version : 0.3.1
+    version : 0.5.1
     """
     pass
 
