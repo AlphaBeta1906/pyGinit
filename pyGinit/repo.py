@@ -16,6 +16,8 @@ from subprocess import Popen, call, STDOUT, PIPE
 from .gitCommand import execute_git
 
 init(autoreset=True)
+
+# All variable in this range is const
 config_obj = ConfigParser()
 parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 gh = Github(config_obj["auth"]["token"])
@@ -27,6 +29,7 @@ license_dict = {
     "Mozilla public license 2.0": "mpl-2.0",
 }
 
+##
 
 def add_readme(add_readme, title, description=""):
     """
