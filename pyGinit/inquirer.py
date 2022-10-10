@@ -1,8 +1,8 @@
-from prompt_toolkit.validation import Validator, ValidationError
+from InquirerPy.base.control import Choice
 from .gitignoreList import gitignore
 
 licenses = [
-    "None",
+    Choice(value=None, name="None"),
     "MIT",
     "Gnu gpl v3",
     "Apache license 2.0",
@@ -40,7 +40,7 @@ questions = [
         "type": "input",
         "name": "additional_gitignore",
         "message": "Additional gitignore separated by comma(e.g: dist/,file.py,*.py)skip if gitgnore template is None : ",
-        "when": lambda result: result["gitginore_template"] != "None",
+        "when": lambda result: result["gitginore_template"],
     },
     {
         "type": "list",

@@ -53,7 +53,7 @@ def add_gitignore(gitginore_template,addtional_gitignore,test=False):
     gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
     additional = "\n".join(addtional_gitignore.split(","))
     try:
-        if not gitginore_template == "None" and not gitginore_template == "Blank":
+        if gitginore_template  and not gitginore_template == "Blank":
             """ download gitignore template from github repository(yeah...repository github account itself) """
             url = f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}.gitignore'
             gitignore = requests.get(url)
@@ -61,7 +61,7 @@ def add_gitignore(gitginore_template,addtional_gitignore,test=False):
                 return gitignore.status_code
             open(".gitignore", "w").write(gitignore.content.decode("utf-8")  + additional)
                 # gitignore.write()
-        elif gitginore_template == "Blank" and not gitginore_template == "None":
+        elif gitginore_template == "Blank" and gitginore_template:
             open(".gitignore","w").write(additional if additional else "")
         else:
             pass
@@ -76,7 +76,7 @@ def add_gitignore(gitginore_template,addtional_gitignore,test=False):
 
 def addLicense(license, test=False):
     try:
-        if license != "None":
+        if license:
             url = requests.get(
                 f"https://choosealicense.com/licenses/{license_dict[license]}/"
             )
