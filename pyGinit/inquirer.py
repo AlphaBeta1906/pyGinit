@@ -34,7 +34,7 @@ questions = [
         "type": "list",
         "name": "gitginore_template",
         "message": "Select gitginore template for your repo",
-        "choices": [g.split(".")[0] for g in gitignore],
+        "choices":  [Choice(value=None, name="None")] + [g.split(".")[0] for g in gitignore],
     },
     {
         "type": "input",
