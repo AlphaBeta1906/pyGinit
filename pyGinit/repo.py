@@ -50,10 +50,10 @@ def add_gitignore(gitginore_template,addtional_gitignore,test=False):
             parameters :
                 gitginore_template(str) : gitignore template name e.g python,javascript etc
     """
-    gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
-    additional = "\n".join(addtional_gitignore.split(","))
     try:
         if gitginore_template  and not gitginore_template == "Blank":
+            gitginore_template = gitginore_template.rstrip("\n")  # remove trailing newline
+            additional = "\n".join(addtional_gitignore.split(","))
             """ download gitignore template from github repository(yeah...repository github account itself) """
             url = f'https://raw.githubusercontent.com/github/gitignore/master/{gitginore_template.strip(" ")}.gitignore'
             gitignore = requests.get(url)
@@ -124,24 +124,25 @@ def push_to_remote(repo_name, remote_name):
     )
 
 
-def create_repo(*args, command="all"):
-    (
-        repo_name,
-        description,
-        remote_name,
-        private,
-        readme_confirm,
-        gitginore_template,
-        license,
-        additional_gitignore
-    ) = args
+def create_repo(command = "all",**kwargs):
+    
+    repo_name = kwargs.get("repo_name")
+    description = kwargs.get("description")
+    remote_name = kwargs.get("remote_name","origin")
+    private = kwargs.get("repo_type")
+    readme_confirm = kwargs.get("readme_confirm")
+    gitginore_template = kwargs.get("gitginore_template")
+    license = kwargs.get("license_name")
+    additional_gitignore = kwargs.get("additional_gitignore")
+    
     private = False if private != "private" else True
 
     try:
         parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
+        # github authorization
+        user = gh.get_user()
 
         # if not program will continue
-
         """
         if statment must tell if one or both local and remote already exist
         example :
@@ -153,7 +154,7 @@ def create_repo(*args, command="all"):
         """
 
         try:
-            repo = gh.get_repo(config_obj["auth"]["username"] + "/" + repo_name)
+            repo = gh.get_repo(user.login + "/" + repo_name)
         except:
             pass  # if repository not exist/get exception it means program can continue
         else:
@@ -171,15 +172,12 @@ def create_repo(*args, command="all"):
         if exception happen(connection error,wrong input etc) repository(local and remote)
         is not created
         """
-        # github authorization
-        user = gh.get_user()
         # create github repo
         repo = user.create_repo(repo_name, description=description, private=private)
         if command == "all":
             add_readme(readme_confirm, repo_name, description)
             add_gitignore(gitginore_template,additional_gitignore)
             addLicense(license)
-        create_repo(answers.get("repo_name"), answers.get("description"), private)
 
     except KeyError:
         click.echo(
@@ -228,7 +226,7 @@ def create_repo(*args, command="all"):
 
             click.echo(
                 "repository succesfully created at :"
-                + f'https://github.com/{config_obj["auth"]["username"]}/{repo_name.replace(" ","-")}.git'
+                + f'https://github.com/{user.login}/{repo_name.replace(" ","-")}.git'
             )
             click.echo(Fore.GREEN + Style.BRIGHT + "Repository succesfully created 🎉🎉")
         else:

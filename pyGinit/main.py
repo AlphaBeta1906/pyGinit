@@ -20,11 +20,11 @@ parser = config_obj.read(path.join(Path.home(), ".pyGinitconfig.ini"))
 
 
 @click.group()
-@click.version_option("0.5.1", help="Show version")
+@click.version_option("0.5.3", help="Show version")
 def pyginit():
     """pyGinit a simple cli automation tools to initalize both local and github remote repository
 
-    version : 0.5.1
+    current version : 0.5.3
     """
     pass
 
@@ -36,16 +36,7 @@ def init():
     # check local repository are exist
     check_git_exist()
     answers = prompt(questions)
-    create_repo(
-        answers.get("repo_name"),
-        answers.get("description"),
-        answers.get("remote_name"),
-        answers.get("repo_type"),
-        answers.get("readme_confirm"),
-        answers.get("gitginore_template"),
-        answers.get("license_name"),
-        answers.get("additional_gitignore")
-    )
+    create_repo(**answers,command="all")
 
 
 @pyginit.command()
